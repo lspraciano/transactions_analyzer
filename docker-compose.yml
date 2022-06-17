@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+    web:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile
+        image: lucaspraciano/transactions_analyzer
+        container_name: transactions_analyzer
+        ports:
+            - "5001:5001"
+        depends_on:
+            - db
+        environment:
+            - FLASK_ENV=production
+
+    db:
+        image: postgres:13
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_PASSWORD=Vish_123123
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=desafio042022
+        restart: always
+        volumes:
+            -  postgresql-data:/var/lib/postgresql/data
+volumes:
+    postgresql-data:
