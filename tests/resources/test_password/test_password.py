@@ -1,7 +1,7 @@
 # Native Imports
 
 # Created Imports
-from resources.py.password.password_manager import generate_password
+from transaction_analyzer.resources.py.password.password_manager import generate_password
 
 
 def test_generate_password_without_parameter():

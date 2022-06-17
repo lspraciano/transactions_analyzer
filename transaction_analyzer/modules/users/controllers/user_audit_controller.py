@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from sqlalchemy import extract, func, distinct
 
 # Created Imports
-from database.database import create_session
-from modules.users.models.user_audit_model import UserAudit
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.modules.users.models.user_audit_model import UserAudit
 
 session = create_session()
 

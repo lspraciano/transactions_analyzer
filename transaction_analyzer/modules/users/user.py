@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request
 
 # Created Imports
-from modules.users.controllers.user_controller import (
+from transaction_analyzer.modules.users.controllers.user_controller import (
     check_login_password,
     get_all_users,
     create_new_user,
@@ -10,7 +10,7 @@ from modules.users.controllers.user_controller import (
     send_reset_password_token_to_user,
     user_update_password_by_token_and_id,
 )
-from resources.py.token.token_manager import token_authentication
+from transaction_analyzer.resources.py.token.token_manager import token_authentication
 
 user_blueprint = Blueprint(
     'user', __name__, template_folder='templates', static_folder='static'

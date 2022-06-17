@@ -2,7 +2,7 @@
 from flask import json
 
 # Created Imports
-from modules.users.controllers.user_controller import get_user_by_id
+from transaction_analyzer.modules.users.controllers.user_controller import get_user_by_id
 
 
 def test_redirect_to_login(client):

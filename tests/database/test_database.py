@@ -2,8 +2,8 @@
 from sqlalchemy_utils import database_exists
 
 # Created Imports
-from database.database import create_session
-from modules.users.models.user_model import User
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.modules.users.models.user_model import User
 
 session = create_session()
 

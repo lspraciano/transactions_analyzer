@@ -2,7 +2,7 @@
 from marshmallow import Schema, fields
 
 # Created Imports
-from modules.users.serializers.user_seriallizer import UserBasicSchema
+from transaction_analyzer.modules.users.serializers.user_seriallizer import UserBasicSchema
 
 
 class TransactionLogSchema(Schema):

@@ -3,8 +3,8 @@ import sys
 from importlib import reload
 
 # Created Imports
-from app import create_app
-from configuration.configuration import app_configuration, app_active
+from transaction_analyzer.app import create_app
+from transaction_analyzer.configuration.configuration import app_configuration, app_active
 
 if __name__ == '__main__':
     config = app_configuration[app_active]

@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import json
 
 # Created Imports
-from modules.transaction.controllers.transaction_controller import (
+from transaction_analyzer.modules.transaction.controllers.transaction_controller import (
     get_transaction_by_date,
 )
 

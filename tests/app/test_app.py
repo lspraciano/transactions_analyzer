@@ -1,8 +1,8 @@
-from configuration.configuration import TestConfig
+from transaction_analyzer.configuration.configuration import TestConfig
 
 
 def test_app_is_created(app):
-    assert app.name == 'app'
+    assert app.name == 'transaction_analyzer.app'
 
 
 def test_debug_is_equal_configuration(app):

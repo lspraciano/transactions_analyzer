@@ -1,5 +1,5 @@
 # Native Imports
-from database.database import ModelBase
+from transaction_analyzer.database.database import ModelBase
 from sqlalchemy import Column, Integer, String, Float, DateTime
 
 

@@ -7,7 +7,7 @@ from sqlalchemy_utils import create_database, database_exists
 
 # Created Imports
 from werkzeug.security import generate_password_hash
-from configuration.configuration import (
+from transaction_analyzer.configuration.configuration import (
     app_configuration,
     app_active,
     Configuration,
@@ -59,12 +59,12 @@ def create_db(app) -> None:
     :return: None
     """
 
-    from modules.transaction.models import (
+    from transaction_analyzer.modules.transaction.models import (
         transaction_model,
         transaction_logs_model,
     )
-    from modules.users.models import user_model
-    from modules.users.models import user_audit_model
+    from transaction_analyzer.modules.users.models import user_model
+    from transaction_analyzer.modules.users.models import user_audit_model
 
     global __engine
 

@@ -1,4 +1,4 @@
-from resources.py.email.email_manager import (
+from transaction_analyzer.resources.py.email.email_manager import (
     send_email_password_new_user,
     validate_email,
 )

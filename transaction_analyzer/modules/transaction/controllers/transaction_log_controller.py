@@ -2,11 +2,11 @@
 from datetime import datetime
 
 # Created Imports
-from database.database import create_session
-from error.error import get_error_msg
-from modules.transaction.models.transaction_logs_model import TransactionLog
-from resources.py.token.token_manager import user_id_from_token
-from modules.transaction.serializers.transaction_log_schema import (
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.error.error import get_error_msg
+from transaction_analyzer.modules.transaction.models.transaction_logs_model import TransactionLog
+from transaction_analyzer.resources.py.token.token_manager import user_id_from_token
+from transaction_analyzer.modules.transaction.serializers.transaction_log_schema import (
     TransactionLogSchema,
 )
 

@@ -12,7 +12,7 @@ from sqlalchemy import (
 # Created Imports
 from sqlalchemy.orm import relationship
 
-from database.database import ModelBase
+from transaction_analyzer.database.database import ModelBase
 
 
 class UserAudit(ModelBase):

@@ -3,12 +3,12 @@ from flask import Flask
 from flask_mail import Mail
 
 # BluePrints Imports
-from database.database import create_db
-from modules.home.home import home_blueprint
-from modules.root.root import root_blueprint
-from modules.transaction.transaction import transaction_blueprint
-from resources.resources import resources_blueprint
-from modules.users.user import user_blueprint
+from transaction_analyzer.database.database import create_db
+from transaction_analyzer.modules.home.home import home_blueprint
+from transaction_analyzer.modules.root.root import root_blueprint
+from transaction_analyzer.modules.transaction.transaction import transaction_blueprint
+from transaction_analyzer.resources.resources import resources_blueprint
+from transaction_analyzer.modules.users.user import user_blueprint
 
 
 def create_app(config) -> Flask:

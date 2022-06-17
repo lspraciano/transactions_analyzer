@@ -4,16 +4,16 @@ from flask import request, make_response
 from sqlalchemy import extract, func
 
 # Created Imports
-from database.database import create_session
-from error.error import get_error_msg
-from modules.transaction.controllers.transaction_log_controller import (
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.error.error import get_error_msg
+from transaction_analyzer.modules.transaction.controllers.transaction_log_controller import (
     save_transaction_log,
 )
-from modules.transaction.json_schema.transactions_json import (
+from transaction_analyzer.modules.transaction.json_schema.transactions_json import (
     json_validate_transaction,
 )
-from modules.transaction.models.transaction_model import Transaction
-from modules.transaction.serializers.transaction_schema import (
+from transaction_analyzer.modules.transaction.models.transaction_model import Transaction
+from transaction_analyzer.modules.transaction.serializers.transaction_schema import (
     TransactionSchema,
 )
 

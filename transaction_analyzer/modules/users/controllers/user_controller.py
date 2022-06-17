@@ -3,37 +3,37 @@ from flask import make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # Created Imports
-from configuration.configuration import Configuration
-from database.database import create_session
-from error.error import get_error_msg
-from modules.users.controllers.user_audit_controller import (
+from transaction_analyzer.configuration.configuration import Configuration
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.error.error import get_error_msg
+from transaction_analyzer.modules.users.controllers.user_audit_controller import (
     user_token_modification_count,
 )
-from modules.users.json_schema.user_authentication_json import (
+from transaction_analyzer.modules.users.json_schema.user_authentication_json import (
     json_validate_user_authentication,
 )
-from modules.users.json_schema.user_create_json import (
+from transaction_analyzer.modules.users.json_schema.user_create_json import (
     json_validate_create_user,
 )
-from modules.users.json_schema.user_update_json import (
+from transaction_analyzer.modules.users.json_schema.user_update_json import (
     json_validate_update_user,
 )
-from modules.users.json_schema.user_update_password import (
+from transaction_analyzer.modules.users.json_schema.user_update_password import (
     json_validate_user_password_update,
 )
-from modules.users.models.user_model import User
-from modules.users.serializers.user_seriallizer import UserBasicSchema
-from resources.py.password.password_manager import (
+from transaction_analyzer.modules.users.models.user_model import User
+from transaction_analyzer.modules.users.serializers.user_seriallizer import UserBasicSchema
+from transaction_analyzer.resources.py.password.password_manager import (
     generate_password,
     validate_password,
 )
-from resources.py.token import token_manager
-from resources.py.email.email_manager import (
+from transaction_analyzer.resources.py.token import token_manager
+from transaction_analyzer.resources.py.email.email_manager import (
     validate_email,
     send_email_password_new_user,
     send_email_token_reset_password,
 )
-from resources.py.token.token_manager import (
+from transaction_analyzer.resources.py.token.token_manager import (
     user_id_from_token,
     mail_token_generate,
 )

@@ -6,7 +6,7 @@ from flask import request, make_response
 from random import *
 
 # Created Imports
-from configuration.configuration import Configuration
+from transaction_analyzer.configuration.configuration import Configuration
 
 
 def token_generator(user_id: int) -> dict:

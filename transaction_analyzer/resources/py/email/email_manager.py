@@ -3,8 +3,8 @@ from flask_mail import Mail, Message
 import re
 
 # Created Imports
-from configuration.configuration import Configuration
-from error.error import get_error_msg
+from transaction_analyzer.configuration.configuration import Configuration
+from transaction_analyzer.error.error import get_error_msg
 
 mail = Mail()
 

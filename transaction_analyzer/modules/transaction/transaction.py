@@ -4,16 +4,16 @@ import datetime
 from flask import Blueprint, render_template, request
 
 # Created Imports
-from modules.transaction.controllers.transaction_controller import (
+from transaction_analyzer.modules.transaction.controllers.transaction_controller import (
     save_transactions_list,
     get_transactions_list_by_date,
     get_suspects_transactions_report,
     get_transactions_report,
 )
-from modules.transaction.controllers.transaction_log_controller import (
+from transaction_analyzer.modules.transaction.controllers.transaction_log_controller import (
     get_all_logs,
 )
-from resources.py.token.token_manager import token_authentication
+from transaction_analyzer.resources.py.token.token_manager import token_authentication
 
 transaction_blueprint = Blueprint(
     'transaction',

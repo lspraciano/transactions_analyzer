@@ -3,8 +3,8 @@ import pytest
 from flask import template_rendered
 
 # Created Imports
-from database.database import create_session
-from resources.py.token.token_manager import token_generator
+from transaction_analyzer.database.database import create_session
+from transaction_analyzer.resources.py.token.token_manager import token_generator
 from run import run_server
 
 

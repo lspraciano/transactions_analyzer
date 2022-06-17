@@ -2,7 +2,7 @@
 import jwt
 
 # Created Imports
-from resources.py.token.token_manager import (
+from transaction_analyzer.resources.py.token.token_manager import (
     token_generator,
     token_authentication,
     user_id_from_token,
