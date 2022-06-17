@@ -1,19 +1,11 @@
 # Imports Native
-from sqlalchemy_utils import database_exists
+
 
 # Created Imports
 from transaction_analyzer.database.database import create_session
 from transaction_analyzer.modules.users.models.user_model import User
 
 session = create_session()
-
-
-def test_db_is_on_test(app):
-    assert 'test' in app.config['SQLALCHEMY_DATABASE_URI']
-
-
-def test_db_is_created(app):
-    assert database_exists(app.config['SQLALCHEMY_DATABASE_URI'])
 
 
 def test_user_admin_is_created(app):

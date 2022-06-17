@@ -1,4 +1,12 @@
+import pytest
+from sqlalchemy_utils import database_exists
+
 from transaction_analyzer.configuration.configuration import TestConfig
+
+
+@pytest.mark.order(1)
+def test_app_is_testing(app):
+    assert app.testing
 
 
 def test_app_is_created(app):
@@ -19,7 +27,7 @@ def test_port_is_equal_configuration(app):
 
 def test_template_reload_is_true(app):
     assert (
-        app.config['TEMPLATES_AUTO_RELOAD'] == TestConfig.TEMPLATES_AUTO_RELOAD
+            app.config['TEMPLATES_AUTO_RELOAD'] == TestConfig.TEMPLATES_AUTO_RELOAD
     )
 
 
@@ -89,3 +97,11 @@ def test_mail_user_name_is_equal_configuration(app):
 
 def test_mail_password_is_equal_configuration(app):
     assert app.config['MAIL_PASSWORD'] == TestConfig.MAIL_PASSWORD
+
+
+def test_db_is_on_test(app):
+    assert 'test' in app.config['SQLALCHEMY_DATABASE_URI']
+
+
+def test_db_is_created(app):
+    assert database_exists(app.config['SQLALCHEMY_DATABASE_URI'])
