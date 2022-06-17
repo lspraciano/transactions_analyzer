@@ -1,0 +1,30 @@
+.useful-area {
+    background-color: #f8f8f8;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: .5px 10px 15px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    width: 70%;
+    height: 70%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .useful-area {
+        width: 90%;
+        height: 80%;
+        min-height: 600px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-device-height: 500px) {
+    .useful-area {
+        width: 90%;
+        min-height: 320px;
+    }
+
+}

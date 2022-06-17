@@ -1,0 +1,20 @@
+.plotting-zone {
+    width: 70%;
+    height: 70%;
+    min-height: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: .5px 10px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 5vh;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .plotting-zone {
+        width: 90%;
+        min-width: 200px;
+        min-height: 630px;
+    }
+}

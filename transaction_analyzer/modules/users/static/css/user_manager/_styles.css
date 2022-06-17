@@ -1,0 +1,15 @@
+/* Configurações Gerais */
+@import "general.css";
+
+/* Table Zone */
+@import "search-zone.css";
+@import "table-zone.css";
+
+/* Table */
+@import "table-user.css";
+
+/* Form Zone */
+@import "form-zone.css";
+
+/* Form */
+@import "user-form.css";

@@ -1,0 +1,56 @@
+.plotting-zone {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.plotting-zone__upper-zone {
+    width: 95%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1rem;
+}
+
+.plotting-zone__medial-zone {
+    width: 95%;
+    height: 80%;
+    display: flex;
+    margin-left: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card--border-purple {
+    border-left: 10px solid #5253a3;
+}
+
+.card--border-red {
+    border-left: 10px solid #a35252;
+}
+
+.card--border-yellow {
+    border-left: 10px solid #a39352;
+}
+
+.card--border-blue {
+    border-left: 10px solid #528da3;
+}
+
+@media only screen and (max-width: 1180px) and (orientation:portrait) {
+    .plotting-zone__upper-zone {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .plotting-zone__medial-zone {
+        flex-wrap: wrap;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 1180px) and (orientation:landscape) {
+    .plotting-zone__upper-zone {
+        min-height: 150px;
+    }
+}

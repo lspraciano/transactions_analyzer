@@ -1,0 +1,14 @@
+/* Configurações Gerais */
+@import "general.css";
+
+/* Pre Loader */
+@import "../../../../../resources/css/preloader.css";
+
+/* Plotting Zone */
+@import "plotting-zone.css";
+
+/* Form Zone */
+@import "form-zone.css";
+
+/* Figure Zone */
+@import "figure-zone.css";

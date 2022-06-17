@@ -1,0 +1,16 @@
+/* Configurações Gerais */
+@import "general.css";
+
+/* Back Button */
+@import "back-button.css";
+
+
+/* Seach Zone */
+@import "search-zone.css";
+
+/* Table Zone */
+@import "table-zone.css";
+
+/* Table */
+@import "table.css";
+@import "table-transaction-described.css";

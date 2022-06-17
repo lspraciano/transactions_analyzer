@@ -1,0 +1,13 @@
+/* ZONA DE PLOTAGEM */
+.plotting-zone {
+    width: 100%;
+    height: 90%;
+    overflow-x: auto;
+}
+
+@media only screen and (max-width: 1180px) {
+    .plotting-zone {
+        min-width: 100vw;
+    }
+
+}

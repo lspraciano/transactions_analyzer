@@ -1,0 +1,12 @@
+/* Configurações Gerais */
+@import "general.css";
+
+/* Plotting Zone */
+@import "plotting-zone.css";
+
+/* Small Card */
+@import "small-card.css";
+
+/* Graphs */
+@import "graph-one-zone.css";
+@import "graph-two-zone.css";

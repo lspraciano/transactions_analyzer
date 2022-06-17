@@ -1,0 +1,25 @@
+.plotting-zone__figure-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 0;
+    width: 50%;
+    min-width: 200px;
+    height: 100%;
+    padding: 1rem;
+}
+
+.figure-zone__image {
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .plotting-zone__figure-zone {
+        order: 2;
+        width: 100%;
+        height: 40%;
+        min-height: 250px;
+    }
+
+}

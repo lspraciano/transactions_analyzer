@@ -1,0 +1,31 @@
+.panel-zone__check-zone {
+
+}
+
+.panel-zone__check-zone input[type=checkbox] {
+    cursor: pointer;
+    accent-color: #5253a3;
+    transform: scale(1.5);
+    margin: 0 .2rem 0 1rem;
+}
+
+.check-zone__text {
+    color: #5253a3;
+    cursor: pointer;
+    user-select: none;
+}
+
+@media only screen and (max-width:800px) {
+    .panel-zone__check-zone {
+        margin-bottom: 1rem;
+    }
+
+    .panel-zone__check-zone input[type=checkbox] {
+        transform: scale(1);
+    }
+
+    .check-zone__text {
+        font-size: .7rem;
+    }
+}
+

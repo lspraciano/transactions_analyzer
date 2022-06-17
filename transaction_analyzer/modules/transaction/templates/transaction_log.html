@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria Transações</title>
+    <!--  Nosso CSS -->
+    <link rel="stylesheet" href="static/css/transaction_log/_style.css">
+    <!--  BoxIcons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+
+    <div class="search-zone" id="search-zone">
+        <input type="text" id="search__term" class="search__term" placeholder="Qual sua pesquisa?">
+    </div>
+
+    <div class="button-zone">
+        <button type="button" id="button-zone_button-back" class="button-zone_button-back">
+            <i class='bx bxs-left-arrow-alt'></i>
+        </button>
+    </div>
+
+
+    <div class="table-zone">
+        <table class="table-zone__table-transaction-logs table" id="table-zone__table-transaction-logs">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Lote</th>
+                    <th>Data e Hora</th>
+                    <th>Responsável</th>
+                </tr>
+            </thead>
+            <tbody  class="table-transaction-logs__body" id="table-transaction-logs__body">
+
+
+            </tbody>
+
+        </table>
+
+        <table class="table-zone__table-transaction-described table" id="table-zone__table-transaction-described">
+            <thead>
+                <tr>
+                    <th>Banco origem</th>
+                    <th>Agência origem</th>
+                    <th>Conta origem</th>
+                    <th>Banco destino</th>
+                    <th>Agência destino</th>
+                    <th>Conta destino</th>
+                    <th>Valor da transação</th>
+                    <th>Data e hora da transação</th>
+                </tr>
+            </thead>
+            <tbody  id="table-transaction-described__body">
+
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+    <!--  JS -->
+    <script type="module" src="static/js/transaction_log/load-data-on-table-logs.js" ></script>
+    <script type="module" src="static/js/transaction_log/load-data-on-table-described.js" ></script>
+    <script type="module" src="static/js/transaction_log/input-event.js" ></script>
+    <script type="module" src="static/js/transaction_log/transaction-table-double-click.js" ></script>
+    <script type="module" src="static/js/transaction_log/back-button-event.js" ></script>
+</html>

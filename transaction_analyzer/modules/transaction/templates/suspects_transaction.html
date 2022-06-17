@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Transações Suspeitas</title>
+    <!--  Nosso CSS -->
+    <link rel="stylesheet" href="../static/css/transactions_suspect/_style.css">
+    <!--  BoxIcons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="panel-zone" id="panel-zone">
+
+        <div class="panel-zone__search-zone" id="panel-zone__search-zone">
+            <input type="month"  class="search-zone__term" id="search-zone__term" required>
+            <button class="search-zone__button" id="search-zone__button">
+                <i class='bx bx-search-alt-2'></i>
+            </button>
+        </div>
+
+        <div class="panel-zone__check-zone" id="panel-zone__search-check-zone">
+            <input type="checkbox" id="check-zone__checkbox-transaction" name="transaction" checked>
+            <label class="check-zone__text" for="check-zone__checkbox-transaction">Transações</label>
+
+            <input type="checkbox" id="check-zone__checkbox-account" name="account" checked>
+            <label class="check-zone__text" for="check-zone__checkbox-account">Contas</label>
+
+            <input type="checkbox" id="check-zone__checkbox-branch" name="branch" checked>
+            <label class="check-zone__text" for="check-zone__checkbox-branch">Agências</label>
+        </div>
+
+    </div>
+
+    <div class="table-zone">
+
+        <div class="table-zone__title-table-zone">
+            <a id="title-table-zone__transaction" >TRANSAÇÕES</a>
+        </div>
+        <table class="table-zone__table-suspect-transactions table" id="table-zone__table-suspect-transactions">
+            <thead>
+                <tr>
+                    <th>Banco origem</th>
+                    <th>Agência origem</th>
+                    <th>Conta origem</th>
+                    <th>Banco destino</th>
+                    <th>Agência destino</th>
+                    <th>Conta destino</th>
+                    <th>Valor da transação</th>
+                    <th>Data/Hora</th>
+                </tr>
+            </thead>
+            <tbody  id="table-suspect-transactions__body">
+            </tbody>
+
+        </table>
+
+        <div class="table-zone__title-table-zone">
+            <a id="title-table-zone__account">CONTAS</a>
+        </div>
+        <table class="table-zone__table-suspect-accounts table" id="table-zone__table-suspect-accounts">
+            <thead>
+                <tr>
+                    <th>Banco</th>
+                    <th>Agência</th>
+                    <th>Conta</th>
+                    <th>Valor da transação</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody  id="table-suspect-accounts__body">
+            </tbody>
+
+        </table>
+
+        <div class="table-zone__title-table-zone">
+            <a id="title-table-zone__branch">AGÊNCIAS</a>
+        </div>
+        <table class="table-zone__table-suspect-branch table" id="table-zone__table-suspect-branch">
+            <thead>
+                <tr>
+                    <th>Banco</th>
+                    <th>Agência</th>
+                    <th>Valor da transação</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody  id="table-suspect-branch__body">
+            </tbody>
+
+        </table>
+    </div>
+
+
+</body>
+    <!--  JS -->
+    <script type="module" src="../static/js/transactions_suspect/checkbox-event.js" ></script>
+    <script type="module" src="../static/js/transactions_suspect/search-button-event.js" ></script>
+</html>

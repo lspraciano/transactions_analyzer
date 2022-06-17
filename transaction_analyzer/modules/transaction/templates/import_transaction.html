@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Importar Transações</title>
+    <!--  Nosso CSS -->
+    <link rel="stylesheet" type="text/css" href="./static/css/import_transaction/_styles.css" media="screen" />
+    <!--  BoxIcons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="card-zone">
+        <div class="card-zone__top">
+
+        </div>
+        <div class="card-zone__mid">
+            <input type="file"  id="input-file" name="input-file" accept="text/csv, text/xml">
+            <label for="input-file">
+                <i class='bx bx-archive-out' id="card-zone__mid__icon-off" ></i>
+                <i class='bx bx-check-square bx-tada' id="card-zone__mid__icon-on" ></i>
+            </label>
+        </div>
+        <div class="card-zone__bottom">
+            <h1 id="title" >Selecione seu arquivo CSV</h1>
+            <button type="button" id="card-zone__bottom__button">Enviar</button>
+        </div>
+    </div>
+</body>
+    <!--  JS -->
+    <script type="module" src="./static/js/import_transaction/file-input.js" ></script>
+    <script type="module" src="./static/js/import_transaction/send-button.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+</html>

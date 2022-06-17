@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboards</title>
+    <!--  Nosso CSS -->
+    <link rel="stylesheet" href="./static/css/dashboards/_styles.css">
+    <!--  BoxIcons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="plotting-zone">
+        <div class="plotting-zone__upper-zone">
+            <div class="upper-zone__small-card card--border-purple">
+                <div class="small-card__header">
+                    Nº Total de Transações
+                </div>
+                <div class="small-card__body-zone">
+                    <div class="body-zone__text" id="text-total-transaction">
+                        -
+                    </div>
+                </div>
+            </div>
+            <div class="upper-zone__small-card card--border-yellow">
+                <div class="small-card__header">
+                    Valor Médio Transação
+                </div>
+                <div class="small-card__body-zone">
+                    <div class="body-zone__text" id="amount-mean-transaction-text">
+                        -
+                    </div>
+                </div>
+            </div>
+            <div class="upper-zone__small-card card--border-red">
+                <div class="small-card__header">
+                    Transsações Suspeitas
+                </div>
+                <div class="small-card__body-zone">
+                    <div class="body-zone__text" id="percentage-suspect-transaction-text">
+                        -
+                    </div>
+                </div>
+            </div>
+            <div class="upper-zone__small-card card--border-blue">
+                <div class="small-card__header">
+                    Valor Médio Suspeito
+                </div>
+                <div class="small-card__body-zone">
+                    <div class="body-zone__text" id="amount-mean-suspect-transaction-text">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="plotting-zone__medial-zone">
+            <div class="medial-zone__graph-one-zone">
+                <canvas class="graph-one-zone__graph" id="graph-one">
+
+                </canvas>
+            </div>
+            <div class="medial-zone__graph-two-zone">
+                <canvas class="graph-two-zone__graph" id="graph-two">
+
+                </canvas>
+            </div>
+        </div>
+
+        <div class="plotting-zone__footer-zone">
+
+        </div>
+
+    </div>
+
+</body>
+    <!--  JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script type="module" src="./static/js/dashboards/event-load-page.js"></script>
+</html>

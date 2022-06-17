@@ -1,0 +1,26 @@
+.button-zone {
+    width: 85%;
+    display: flex;
+    justify-content: right;
+}
+
+.button-zone_button-back {
+    width: 10%;
+    height: auto;
+    min-width: 30px;
+    border: 1px solid #5253A3FF;
+    background: #5253A3FF;
+    text-align: center;
+    color: #f1f8ff;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-bottom: .5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-zone_button-back i {
+    font-size: 2rem;
+}

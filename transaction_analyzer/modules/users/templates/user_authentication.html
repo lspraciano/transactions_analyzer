@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-Vindo</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./static/css/user_authentication/_styles.css">
+</head>
+<body>
+
+<div class="useful-area">
+    <div class="useful-area__figure-zone">
+        <div class="figure-zone__figure">
+            <img src="./static/images/user_authentication/login.svg" alt="Entrar no Sistema"
+                 class="figure__image">
+        </div>
+        <div class="figure-zone__link-pass-reset">
+            <a href="/user/reset-password">Recuperar ou Trocar senha</a>
+        </div>
+    </div>
+    <div class="useful-area__form-zone">
+        <h2>Faça seu Login</h2>
+        <form class="form-zone__form">
+            <div class="form__username">
+                <input type="text" class="username__input" name="user" id="user"
+                       placeholder="DIGITE O NOME DO USUÁRIO">
+            </div>
+            <div class="form__password">
+                <input type="password" class="password__input" name="password" id="password"
+                       placeholder="DIGITE SUA SENHA">
+            </div>
+            <input id="button-login" type="button" class="form__button" value="Entrar" name="button">
+        </form>
+    </div>
+</div>
+
+</body>
+<script type="module" src="static/js/user_authentication/user-authenticate-post-data.js"></script>
+</html>

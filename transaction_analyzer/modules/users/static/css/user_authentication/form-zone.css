@@ -1,0 +1,106 @@
+.useful-area__form-zone {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    order: 2;
+}
+
+.useful-area__form-zone h2 {
+    font-weight: 900;
+    color: #5253a3;
+    font-size: 2rem;
+    margin-bottom: 10%;
+}
+
+.form-zone__form {
+    display: block;
+    padding-bottom: 2rem;
+    width: 100%;
+}
+
+.username__input {
+    text-transform: uppercase;
+}
+
+.username__input,
+.password__input {
+    background-color: #f8f8f8;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0.75rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.username__input:focus {
+    outline: none;
+}
+
+.password__input:focus {
+    outline: none;
+}
+
+.username__input:-webkit-autofill,
+.password__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #f8f8f8 inset !important;
+}
+
+.form__button {
+    font-weight: 900;
+    font-size: 1rem;
+    color: #f8f8f8;
+    border-radius: .5rem;
+    padding: .5rem;
+    width: 100%;
+    background-color: #5253a3;
+    border-color: #5253a3;
+    cursor: pointer;
+}
+
+.form-zone__form input[type="button"]:hover {
+    background-color: #3e3ea9;
+    color: #f8f8f8;
+}
+
+
+@media (max-width: 768px) {
+    .useful-area__form-zone {
+        order: 1;
+        width: 100%;
+        height: 50%;
+    }
+}
+
+@media (max-device-height: 500px) {
+    .useful-area__form-zone h2 {
+        font-weight: 900;
+        color: #5253a3;
+        font-size: 1.5rem;
+        margin-bottom: 5%;
+    }
+
+    .username__input,
+    .password__input {
+        background-color: #f8f8f8;
+        border: none;
+        border-bottom: 1px solid #CCC;
+        border-radius: 0;
+        box-shadow: none;
+        padding: .8rem 0.5rem;
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .form__button {
+        padding: .2rem;
+    }
+}
+

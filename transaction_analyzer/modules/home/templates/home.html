@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!--  Nosso CSS -->
+    <link rel="stylesheet" href="./static/css/home/_styles.css">
+    <!--  BoxIcons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<div class="pre-loader" id="pre-loader" >
+    <div  class="pre-loader_gif" id="pre-loader__gif"></div>
+</div>
+
+<body>
+
+    <div id="side-bar-zone" class="side-bar-zone">
+
+        <div class="side-bar-zone__menu">
+
+            <div class="menu__header-zone">
+
+                <div class="header-zone__title">
+                    <span>Menu</span>
+                </div>
+
+
+            </div>
+
+            <div class="menu__body">
+
+                <ul>
+                    <li>
+                        <a id="menu-body__option-dashboard">
+                            <i class='bx bx-grid-alt'></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="menu-body__option-transaction" class="menu-body__options">
+                            <div>
+                                <i class='bx bx-transfer'></i>
+                                <span>Transações</span>
+                            </div>
+                            <span id="option-transaction__arrow" class='bx bx-chevron-right options__arrow'></span>
+                        </a>
+                        <ul id="option-transaction__suboption" class="menu-body__suboptions">
+                            <li>
+                                <a id="suboption_import">
+                                    <i class='bx bx-import'></i>
+                                    <span>Importar</span>
+                                </a>
+                                <a id="suboption_audit">
+                                    <i class='bx bxs-binoculars'></i>
+                                    <span>Histórico</span>
+                                </a>
+                                <a id="suboption_suspect">
+                                    <i class='bx bx-cross'></i>
+                                    <span>Suspeitas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="menu-body__option-user" class="menu-body__options">
+                            <div>
+                                <i class='bx bx-user'></i>
+                                <span>Usuários</span>
+                            </div>
+                            <span id="option-user__arrow" class='bx bx-chevron-right options__arrow'></span>
+                        </a>
+                        <ul id="option-user__suboption" class="menu-body__suboptions">
+                            <li>
+                                <a id="suboption_user-manager">
+                                    <i class='bx bx-edit-alt'></i>
+                                    <span>Gerenciar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="menu-footer">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="useful-area-zone">
+
+        <div class="useful-area-zone__navigation-zone">
+
+            <div id="navigation-zone_menu-icon" class="navigation-zone_menu-icon">
+                <a class='bx bx-menu'></a>
+            </div>
+
+            <div class="navigation-zone__screen-name">
+                <div id="screen-name">
+                    Dashboard
+                </div>
+            </div>
+            <div class="navigation-zone__logout">
+                <a id="icon-logout" class='bx bx-log-out'></a>
+                <a id="btn-logout" class="logout">Logout</a>
+            </div>
+        </div>
+
+        <div id="plotting-zone" class="plotting-zone">
+
+            <iframe id="plotting-zone__frame-to-html" class="zona-de-plotagem__frame-to-html" src=""> </iframe>
+
+        </div>
+    </div>
+
+</body>
+    <script type="text/javascript" src="./static/js/home/call-dashboards-onload.js"></script>
+    <script type="text/javascript" src="./static/js/home/sub-menu-animation.js"></script>
+    <script type="text/javascript" src="./static/js/home/side-bar-animation.js"></script>
+    <script type="text/javascript" src="./static/js/home/reload-on-back-foward.js"></script>
+    <script type="module" src="./static/js/home/sub-menu-loader-iframe.js"></script>
+    <script type="module" src="./static/js/home/logout.js"></script>
+</html>

@@ -1,0 +1,133 @@
+/* Zona Menu Lateral */
+.side-bar-zone {
+    width: 20%;
+    height: 100%;
+    min-width: 300px;
+    max-width: 300px;
+    z-index: 100;
+}
+
+.side-bar-zone--hide {
+    /* Class to JS */
+    display: none;
+}
+
+.side-bar-zone__menu {
+    height: 97%;
+    width: 100%;
+    background-image: linear-gradient(5deg, #42424a, #191919);
+    border-radius: 10px;
+    margin: 11px 0px 0px 6px;
+    color: #fff;
+    padding: 0 15px 0 20px;
+}
+
+
+.side-bar-zone__menu a {
+    cursor: pointer;
+}
+
+.menu__header-zone {
+    display: flex;
+    align-items: center;
+    padding: 30px 0 20px 0;
+}
+
+.header-zone__title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.navigation-zone_menu-icon {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.menu__body ul li {
+    width: 100%;
+    height: auto;
+    margin: 0 5px;
+    list-style: none;
+    line-height: 50px;
+}
+
+.menu__body ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border-radius: 12px;
+}
+
+.menu__body ul li a:visited {
+    color: #fff;
+}
+
+
+.menu__body ul li a:hover {
+    color: #11101d;
+    background: #fff;
+}
+
+.menu__body ul li i {
+    height: 50px;
+    min-width: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.menu-body__options {
+    justify-content: space-between;
+    display: flex;
+}
+
+.options__arrow {
+    padding: 20px;
+}
+
+.menu-body__suboptions {
+    margin-left: 30px;
+    display: none;
+    animation-name: show;
+    animation-duration: .3s;
+    animation-timing-function: ease;
+}
+
+.sub-options-activate {
+    display: flex
+}
+
+.arrow-sub-options-activate {
+    transform: rotate(90deg)
+}
+
+
+@keyframes show {
+
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+}
+
+@media only screen and (max-width: 1180px) {
+    .side-bar-zone {
+        display: none;
+    }
+
+    .side-bar-zone--hide {
+        /* Class para JS */
+        display: flex;
+
+    }
+}

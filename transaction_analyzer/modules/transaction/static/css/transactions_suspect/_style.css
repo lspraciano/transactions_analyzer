@@ -1,0 +1,22 @@
+/* General Configuration */
+@import "general.css";
+
+/* Panel Zone */
+@import "panel-zone.css";
+
+/* Search Zone */
+@import "search-zone.css";
+
+/* Check Zone */
+@import "check-zone.css";
+
+/* Table Title Zone */
+@import "table-title.css";
+
+/* Table Zone */
+@import "table-zone.css";
+
+/* Table */
+@import "table.css";
+@import "table-transaction-described.css";
+@import "table-accounts-described.css";
