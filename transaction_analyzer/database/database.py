@@ -63,8 +63,10 @@ def create_db(app) -> None:
         transaction_model,
         transaction_logs_model,
     )
-    from transaction_analyzer.modules.users.models import user_model
-    from transaction_analyzer.modules.users.models import user_audit_model
+    from transaction_analyzer.modules.users.models import (
+        user_model,
+        user_audit_model
+    )
 
     global __engine
 

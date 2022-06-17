@@ -6,3 +6,8 @@ format:
 
 sec:
 		@pip-audit
+test:
+		@pytest
+run:
+		@python -m run
+
