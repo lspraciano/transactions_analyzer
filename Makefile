@@ -7,7 +7,7 @@ format:
 sec:
 		@pip-audit
 test:
-		@pytest -x
+		@pytest
 run:
 		@python -m run
 

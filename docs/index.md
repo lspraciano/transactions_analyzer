@@ -6,13 +6,7 @@ de ensino ALURA, mas estou incrementado algumas funcionalidades não listadas
 para este desafio, como exemplo a Tabela SQL de auditória de modificações
 nos usuários e uma HomePage com Dashboards.
 
----
 
-# Índice
-1. [Status do Projeto](#Status do Projeto)
-2. [Tecnologia Usada](#Tecnologia Usada)
-
-<a name="Status do Projeto"></a>
 ## Status do Projeto
 
 - Em Desenvolvimento

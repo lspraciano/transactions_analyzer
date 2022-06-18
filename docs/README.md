@@ -6,17 +6,10 @@ de ensino ALURA, mas estou incrementado algumas funcionalidades não listadas
 para este desafio, como exemplo a Tabela SQL de auditória de modificações
 nos usuários e uma HomePage com Dashboards.
 
-# Índice
-1. [Status do Projeto](#Status do Projeto)
-
 
 ## Status do Projeto
 
 - Em Desenvolvimento
-
-### O que Falta?
-- Documentar como clonar e executar o projeto localmente
-- Documentar como consumir nossa API
 
 ## Tecnologia Usada
 

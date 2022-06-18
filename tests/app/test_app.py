@@ -6,6 +6,8 @@ from transaction_analyzer.configuration.configuration import TestConfig
 
 @pytest.mark.order(1)
 def test_app_is_testing(app):
+    if not app.testing:
+        pytest.exit("Critical Error!!! FLASK_ENV must be equal to 'test' ")
     assert app.testing
 
 
