@@ -6,14 +6,16 @@ de ensino ALURA, mas estou incrementado algumas funcionalidades não listadas
 para este desafio, como exemplo a Tabela SQL de auditória de modificações
 nos usuários e uma HomePage com Dashboards.
 
+---
 
+# Índice
+1. [Status do Projeto](#Status do Projeto)
+2. [Tecnologia Usada](#Tecnologia Usada)
+
+<a name="Status do Projeto"></a>
 ## Status do Projeto
 
 - Em Desenvolvimento
-
-### O que Falta?
-- Documentar como clonar e executar o projeto
-- Documentar como consumir nossa API
 
 ## Tecnologia Usada
 
@@ -57,8 +59,8 @@ Podemos usar esta aplicação de 3 formas:
 7. Recuperar ou Trocar Senha de Acesso
 
 Nossa app esta disponibilizado para uso atráves do link:
-
-    http://transactions-analyzer.herokuapp.com/
+    
+[transactions-analyzer.herokuapp.com](http://transactions-analyzer.herokuapp.com/)
 
 ##### 1. Autenticação de Usuário
 
