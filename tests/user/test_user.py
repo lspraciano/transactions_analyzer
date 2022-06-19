@@ -294,7 +294,7 @@ def test_update_user_with_valid_json_and_only_user_name_updated(
         'user_id': 2,
         'user_name': 'BOO',
         'user_email': None,
-        'user_status': 1,
+        'user_status': None,
     }
 
     user_from_db_before_update = get_user_by_id(data['user_id'])
@@ -344,7 +344,7 @@ def test_update_user_with_valid_json_and_only_user_email_updated(
         'user_id': 2,
         'user_name': None,
         'user_email': 'FOO2@GMAIL.COM',
-        'user_status': 1,
+        'user_status': None,
     }
 
     user_from_db_before_update = get_user_by_id(data['user_id'])
@@ -435,6 +435,43 @@ def test_update_user_with_valid_json_and_only_user_status_updated(
 
     assert response.json['user'][0]['user_id'] == data['user_id']
     assert response.json['user'][0]['user_status'] == data['user_status']
+
+
+def test_update_user_with_valid_json_and_no_changes_to_save(
+    app, client_admin_authenticaded
+):
+    data = {
+        'user_id': 2,
+        'user_name': None,
+        'user_email': None,
+        'user_status': None,
+    }
+
+    response = client_admin_authenticaded.patch(
+        'user/',
+        data=json.dumps(data),
+        headers={'Content-Type': 'application/json'},
+    )
+
+    assert response.status_code == 400
+    assert 'error' in response.json
+
+
+def test_update_user_with_invalid_same_value_in_database(app, client_admin_authenticaded):
+    data = {
+        'user_id': 2,
+        'user_name': 'BOO',
+        'user_email': 'FOO2@GMAIL.COM',
+        'user_status': 0,
+    }
+
+    response = client_admin_authenticaded.patch(
+        'user/',
+        data=json.dumps(data),
+        headers={'Content-Type': 'application/json'},
+    )
+    assert response.status_code == 400
+    assert 'error' in response.json
 
 
 def test_update_user_with_invalid_json_field_user_id(

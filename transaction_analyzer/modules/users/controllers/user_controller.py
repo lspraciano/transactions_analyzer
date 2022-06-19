@@ -229,13 +229,21 @@ def update_user(user_dict: dict) -> make_response:
     if not json_validate_update_user(user_dict):
         return make_response({'error': 'invalid json'}, 415)
 
-    if not user_dict['user_id']:
+    if user_dict['user_id'] is None:
         return make_response({'error': 'invalid user id'}, 400)
+
+    if user_dict['user_name'] is None and user_dict['user_email'] is None and user_dict['user_status'] is None:
+        return make_response({'error': 'there are no changes to save'}, 400)
 
     user = get_user_by_id(user_dict['user_id'])
 
     if not user:
         return make_response({'error': 'non-existing user'}, 400)
+
+    if user.user_name == user_dict['user_name'] and \
+            user.user_email == user_dict['user_email'] and \
+            user.user_status == user_dict['user_status']:
+        return make_response({'error': 'there are no changes to save'}, 400)
 
     user_from_token = user_id_from_token()
 
@@ -243,12 +251,12 @@ def update_user(user_dict: dict) -> make_response:
         return make_response(user_from_token, 400)
 
     if (
-        user_dict['user_id'] == user_from_token['user_id']
-        and user_dict['user_status'] == 0
+            user_dict['user_id'] == user_from_token['user_id']
+            and user_dict['user_status'] == 0
     ):
         return make_response({'error': 'you cannot disable your access'}, 400)
 
-    if user.user_name != user_dict['user_name'] and user_dict['user_name']:
+    if user.user_name != user_dict['user_name'] and user_dict['user_name'] is not None:
         validate_username = check_username_email(
             user_name=user_dict['user_name']
         )
@@ -256,7 +264,7 @@ def update_user(user_dict: dict) -> make_response:
             return make_response(validate_username, 400)
         user.user_name = user_dict['user_name'].upper()
 
-    if user.user_email != user_dict['user_email'] and user_dict['user_email']:
+    if user.user_email != user_dict['user_email'] and user_dict['user_email'] is not None:
         validate_user_email = check_username_email(
             email=user_dict['user_email']
         )
@@ -264,10 +272,10 @@ def update_user(user_dict: dict) -> make_response:
             return make_response(validate_user_email, 400)
         user.user_email = user_dict['user_email']
 
-    if user_dict['user_status'] in [0, 1]:
+    if user.user_status != user_dict['user_status'] and user_dict['user_status'] is not None:
+        if user_dict['user_status'] not in [0, 1]:
+            return make_response({'error': 'invalid status'}, 400)
         user.user_status = user_dict['user_status']
-    else:
-        return make_response({'error': 'invalid status'}, 400)
 
     user.user_last_modification_user_id = user_from_token['user_id']
 

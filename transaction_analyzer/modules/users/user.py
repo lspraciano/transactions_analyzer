@@ -42,7 +42,6 @@ def user_authentication():
 
 
 @user_blueprint.route('/manager', methods=['GET'])
-@cross_origin()
 @token_authentication
 def user_manager():
     if request.method == 'GET':
