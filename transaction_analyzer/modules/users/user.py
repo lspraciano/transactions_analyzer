@@ -2,6 +2,8 @@
 from flask import Blueprint, render_template, request
 
 # Created Imports
+from flask_cors import cross_origin
+
 from transaction_analyzer.modules.users.controllers.user_controller import (
     check_login_password,
     get_all_users,
@@ -18,6 +20,7 @@ user_blueprint = Blueprint(
 
 
 @user_blueprint.route('/', methods=['GET', 'POST', 'PATCH'])
+@cross_origin()
 @token_authentication
 def user():
     if request.method == 'GET':
@@ -30,6 +33,7 @@ def user():
 
 
 @user_blueprint.route('/authentication', methods=['GET', 'POST'])
+@cross_origin()
 def user_authentication():
     if request.method == 'GET':
         return render_template('user_authentication.html')
@@ -38,6 +42,7 @@ def user_authentication():
 
 
 @user_blueprint.route('/manager', methods=['GET'])
+@cross_origin()
 @token_authentication
 def user_manager():
     if request.method == 'GET':
@@ -45,6 +50,7 @@ def user_manager():
 
 
 @user_blueprint.route('/reset-password', methods=['GET', 'POST', 'PATCH'])
+@cross_origin()
 def user_reset_password():
     if request.method == 'GET':
         return render_template('user_password_recovery.html')

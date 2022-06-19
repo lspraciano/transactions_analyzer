@@ -1,5 +1,6 @@
 # Native Imports
 from flask import Flask
+from flask_cors import CORS
 from flask_mail import Mail
 
 # BluePrints Imports
@@ -19,6 +20,10 @@ def create_app(config) -> Flask:
     create_db(app)
 
     return app
+
+
+def _enable_cors(app: Flask) -> None:
+    CORS(app)
 
 
 def _register_extensions(app: Flask) -> None:

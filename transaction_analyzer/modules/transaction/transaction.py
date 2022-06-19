@@ -4,6 +4,8 @@ import datetime
 from flask import Blueprint, render_template, request
 
 # Created Imports
+from flask_cors import cross_origin
+
 from transaction_analyzer.modules.transaction.controllers.transaction_controller import (
     save_transactions_list,
     get_transactions_list_by_date,
@@ -24,6 +26,7 @@ transaction_blueprint = Blueprint(
 
 
 @transaction_blueprint.route('/', methods=['GET', 'POST'])
+@cross_origin()
 @token_authentication
 def transactions():
     if request.method == 'GET':
@@ -45,6 +48,7 @@ def audit_transaction():
 
 
 @transaction_blueprint.route('/log/get-log', methods=['GET'])
+@cross_origin()
 @token_authentication
 def audit_transaction_data():
     return get_all_logs(), 200
@@ -57,12 +61,14 @@ def report_transactions_suspect():
 
 
 @transaction_blueprint.route('/suspect', methods=['GET'])
+@cross_origin()
 @token_authentication
 def transactions_suspect():
     return get_suspects_transactions_report(request)
 
 
 @transaction_blueprint.route('/report', methods=['GET'])
+@cross_origin()
 @token_authentication
 def transactions_report():
     return get_transactions_report()
