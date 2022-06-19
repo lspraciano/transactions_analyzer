@@ -1,0 +1,186 @@
+openapi: 3.0.0
+
+info:
+  title: Transactions Analyzer - API
+  version: 1.0.0
+  contact:
+    name: Suporte a Desenvolvedores
+    email: luskcct@gmail.com
+  license:
+    name: Licença GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+
+
+servers:
+  - url: http://127.0.0.1:5001
+
+
+paths:
+  /user/:
+    post:
+      tags:
+        - User
+      summary: Cria um novo usuário no banco de dados
+      description: Esta rota insere no banco SQL um usuário. Antes de inserir é verificado a existência do email ou
+        username no banco para evitar duplicidade nos cadastros. Será gerada uma senha com 8 carácteres para este
+        usuário e enviada automaticamente para o email informado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        200:
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicUser'
+        400:
+          description: Erro ao tentar criar usuário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        415:
+          description: Erro no JSON da requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+    get:
+      tags:
+        - User
+      summary: Retorna uma lista com todos os usuário do banco de dados
+      description: Retorna todos os usuário do banco de dados com exeção do usuário
+        administrador.
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+    patch:
+      tags:
+        - User
+      summary: Atualiza Dados do Usuário
+      description: Atualiza um registro de usuário no banco de dados através do seu ID que deverá ser informado
+        dentro do dicionário com os outros dados que se deseja atualizar. Todos os campos do dicionário de entrada
+        são obrogatórios, porém caso não deseje atualizar algum dos campos, este campos deve ser nulo. ATENÇÃO
+        Esta rota não permite atualizar password ou token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        201:
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicUser'
+        400:
+          description: Erro ao tentar atualizar o usuário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        415:
+          description: Erro no JSON da requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+
+components:
+  schemas:
+
+    BasicUser:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        user_name:
+          type: string
+        user_email:
+          type: string
+        user_status:
+          type: integer
+        user_last_modification_user_id:
+          type: integer
+
+    BasicUserList:
+      type: array
+      items:
+        $ref: '#/components/schemas/BasicUser'
+
+    UpdateUser:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          minimum: 1
+        user_name:
+          type: string
+          x-constraints: "Capitalized(required = true)"
+          minLength: 1
+          nullable: true
+        user_email:
+          type: string
+          x-constraints: "Capitalized(required = true)"
+          minLength: 1
+          nullable: true
+        user_status:
+          type: integer
+          minimum: 0
+          maximum: 1
+          nullable: true
+
+      required:
+        - user_id
+        - user_name
+        - user_email
+        - user_status
+
+    CreateUser:
+      type: object
+      properties:
+        user_name:
+          type: string
+          minLength: 1
+          x-constraints: "Capitalized(required = true)"
+        user_email:
+          type: string
+          minLength: 1
+          x-constraints: "Capitalized(required = true)"
+
+      required:
+        - user_name
+        - user_email
+
+    ErrorResoponse:
+      type: object
+      properties:
+        error:
+          type: string
