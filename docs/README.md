@@ -301,4 +301,7 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
 
 ### 3. Consumir nossa API:
     
-    Seção do docs não disponível neste momento 
+    Para consumir nossa API montamos um Swagger UI. Você pode acessar através
+    do link abaixo.
+
+[Swagger - Transactions Analyzer API](http://transactions-analyzer.herokuapp.com/swagger)
