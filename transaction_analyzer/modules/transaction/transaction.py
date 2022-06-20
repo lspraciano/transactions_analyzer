@@ -25,6 +25,21 @@ transaction_blueprint = Blueprint(
 )
 
 
+@transaction_blueprint.route('/transaction-import-template', methods=['GET'])
+def template_import_csv():
+    return render_template('import_transaction.html')
+
+
+@transaction_blueprint.route('/transaction-log-template', methods=['GET'])
+def template_audit_transaction():
+    return render_template('transaction_log.html')
+
+
+@transaction_blueprint.route('/transaction-suspect-template', methods=['GET'])
+def template_transactions_suspect():
+    return render_template('suspects_transaction.html')
+
+
 @transaction_blueprint.route('/', methods=['GET', 'POST'])
 @cross_origin()
 @token_authentication
@@ -35,29 +50,11 @@ def transactions():
         return save_transactions_list(request.json)
 
 
-@transaction_blueprint.route('/import', methods=['GET'])
-@token_authentication
-def import_csv():
-    return render_template('import_transaction.html')
-
-
-@transaction_blueprint.route('/log', methods=['GET'])
-@token_authentication
-def audit_transaction():
-    return render_template('transaction_log.html')
-
-
 @transaction_blueprint.route('/log/get-log', methods=['GET'])
 @cross_origin()
 @token_authentication
 def audit_transaction_data():
     return get_all_logs(), 200
-
-
-@transaction_blueprint.route('/suspect/report', methods=['GET'])
-@token_authentication
-def report_transactions_suspect():
-    return render_template('suspects_transaction.html')
 
 
 @transaction_blueprint.route('/suspect', methods=['GET'])

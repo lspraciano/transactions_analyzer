@@ -15,7 +15,6 @@ class Configuration:
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')  # System user admin password
     ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')  # System user admin email
     ADMIN_STATUS = 1  # System user admin status
-    TOKEN_NAME = 'new_app'  # Name of Cookie to set to the browser
     TIME_EXP_TOKEN = 30  # Time in minutes of JWT token
     LIMIT_EXP_TOKEN = 1  # Time in minutes of JWT token to expire
     MAIL_SERVER = 'smtp.gmail.com'

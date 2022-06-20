@@ -1,3 +1,5 @@
+import {getCookie} from "../../../../../resources/js/cookie/cookie-manager.js";
+
 export const saveNewUser = async (username, email) => {
 
     const user = {
@@ -9,7 +11,8 @@ export const saveNewUser = async (username, email) => {
     const param = {
         method: "POST",
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + await getCookie()
         },
         body: JSON.stringify(user)
 

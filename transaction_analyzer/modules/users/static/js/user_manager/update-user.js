@@ -1,3 +1,5 @@
+import {getCookie} from "../../../../../resources/js/cookie/cookie-manager.js";
+
 export const updateUser = async (cod, username, email, status) => {
 
     const user = {
@@ -11,7 +13,8 @@ export const updateUser = async (cod, username, email, status) => {
     const param = {
         method: "PATCH",
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + await getCookie()
         },
         body: JSON.stringify(user)
 

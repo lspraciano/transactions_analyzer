@@ -25,10 +25,12 @@ export const loadDataOnTables = async (date) => {
 
     if ('error' in data) {
         alert(data['error']);
-        if ('unauthorized' === data['error'])
-            window.location.reload();
+        if ('unauthorized' === data['error']) {
+            window.parent.location.href = `${window.location.origin}/`;
+        }
         return;
     }
+
 
     if (data['transactions_suspect'].length === 0
         && data['transactions_suspect_destination_account'].length === 0

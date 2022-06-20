@@ -19,6 +19,22 @@ user_blueprint = Blueprint(
 )
 
 
+@user_blueprint.route('/login', methods=['GET'])
+def user_template_login():
+    return render_template('user_authentication.html')
+
+
+@user_blueprint.route('/manager-template', methods=['GET'])
+def user_template_manager():
+    return render_template('user_manager.html')
+
+
+@user_blueprint.route('/password-reset-template', methods=['GET'])
+@cross_origin()
+def user_template_reset_password():
+    return render_template('user_password_recovery.html')
+
+
 @user_blueprint.route('/', methods=['GET', 'POST', 'PATCH'])
 @cross_origin()
 @token_authentication
@@ -32,28 +48,16 @@ def user():
         return update_user(request.json)
 
 
-@user_blueprint.route('/authentication', methods=['GET', 'POST'])
+@user_blueprint.route('/authentication', methods=['POST'])
 @cross_origin()
 def user_authentication():
-    if request.method == 'GET':
-        return render_template('user_authentication.html')
-    elif request.method == 'POST':
-        return check_login_password(request.json)
+    return check_login_password(request.json)
 
 
-@user_blueprint.route('/manager', methods=['GET'])
-@token_authentication
-def user_manager():
-    if request.method == 'GET':
-        return render_template('user_manager.html')
-
-
-@user_blueprint.route('/reset-password', methods=['GET', 'POST', 'PATCH'])
+@user_blueprint.route('/reset-password', methods=['POST', 'PATCH'])
 @cross_origin()
 def user_reset_password():
-    if request.method == 'GET':
-        return render_template('user_password_recovery.html')
-    elif request.method == 'POST':
+    if request.method == 'POST':
         return send_reset_password_token_to_user(request.json)
     elif request.method == 'PATCH':
         return user_update_password_by_token_and_id(request.json)

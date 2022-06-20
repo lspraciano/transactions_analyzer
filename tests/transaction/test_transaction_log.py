@@ -7,10 +7,10 @@ from transaction_analyzer.modules.transaction.controllers.transaction_log_contro
 )
 
 
-def test_transaction_log_template_with_valid_token(
-    app, client_admin_authenticaded, captured_templates
+def test_transaction_log_templaten(
+        app, client, captured_templates
 ):
-    response = client_admin_authenticaded.get('transaction/log')
+    response = client.get('transaction/transaction-log-template')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
@@ -18,12 +18,7 @@ def test_transaction_log_template_with_valid_token(
     assert template.name == 'transaction_log.html'
 
 
-def test_transaction_log_template_without_token(client):
-    response = client.get('transaction/log')
-    assert response.status_code == 401
-
-
-def test_save_transaction_log_with_valid_json(app, client_admin_authenticaded):
+def test_save_transaction_log_with_valid_json(app, client, token_jwt_admin_user):
     data = [
         {
             'transaction_home_bank': 'TEST',
@@ -37,10 +32,12 @@ def test_save_transaction_log_with_valid_json(app, client_admin_authenticaded):
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     transaction_logs = get_all_logs()
@@ -49,19 +46,19 @@ def test_save_transaction_log_with_valid_json(app, client_admin_authenticaded):
     assert len(transaction_logs['logs']) == len(data)
     assert 'logs' in transaction_logs
     assert (
-        data[0]['transaction_date_time']
-        in transaction_logs['logs'][0][
-            'transactions_log_transactions_datetime'
-        ]
+            data[0]['transaction_date_time']
+            in transaction_logs['logs'][0][
+                'transactions_log_transactions_datetime'
+            ]
     )
     assert (
-        app.config['ADMIN_USER_ID']
-        == transaction_logs['logs'][0]['transactions_log_id']
+            app.config['ADMIN_USER_ID']
+            == transaction_logs['logs'][0]['transactions_log_id']
     )
 
 
 def test_save_transaction_log_with_invalid_json_field_transaction_home_bank(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -76,10 +73,12 @@ def test_save_transaction_log_with_invalid_json_field_transaction_home_bank(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     transaction_logs = get_all_logs()
@@ -87,6 +86,6 @@ def test_save_transaction_log_with_invalid_json_field_transaction_home_bank(
     assert response.status_code == 400
     for log in transaction_logs['logs']:
         assert (
-            data[0]['transaction_date_time']
-            not in log['transactions_log_transactions_datetime']
+                data[0]['transaction_date_time']
+                not in log['transactions_log_transactions_datetime']
         )

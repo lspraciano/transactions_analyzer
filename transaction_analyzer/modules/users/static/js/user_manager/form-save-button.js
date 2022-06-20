@@ -32,11 +32,12 @@ const saveButtonEvent = async () => {
 
         if ('error' in result) {
             alert(result['error']);
-            if (result['error'] === 'unauthorized')
+            if ('unauthorized' === result['error']) {
+                window.parent.location.href = `${window.location.origin}/`;
+            } else {
+                alert('user saved successfully');
                 window.location.reload();
-        } else {
-            alert('user saved successfully');
-            window.location.reload();
+            }
         }
     }
 

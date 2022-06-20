@@ -115,7 +115,6 @@ paths:
 
 components:
   schemas:
-
     BasicUser:
       type: object
       properties:

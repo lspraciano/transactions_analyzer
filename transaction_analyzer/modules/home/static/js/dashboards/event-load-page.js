@@ -13,6 +13,9 @@ const afterLoader = async () => {
 
     if ('error' in data) {
         alert(data['error']);
+        if ('unauthorized' === data['error']) {
+            window.parent.location.href = `${window.location.origin}/`;
+        }
         return;
     }
 

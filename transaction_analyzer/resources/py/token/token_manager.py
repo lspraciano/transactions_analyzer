@@ -41,18 +41,13 @@ def token_authentication(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
 
-        try:
-            token_name = Configuration.TOKEN_NAME
-            token_from_cookie = request.cookies.get(token_name)
-            token_no_bearer = token_from_cookie
-
-        except:
+        if 'Authorization' not in request.headers:
             return make_response({'error': 'unauthorized'}, 401)
 
-        if token_from_cookie is None:
-            return make_response({'error': 'unauthorized'}, 401)
+        token_from_headers = request.headers['Authorization']
 
         try:
+            token_no_bearer = token_from_headers[7:]
             decode = jwt.decode(
                 token_no_bearer, Configuration.SECRET_KEY, algorithms=['HS256']
             )
@@ -70,20 +65,18 @@ def user_id_from_token() -> dict:
     :return: em caso de sucesso {'user_id': user_id} ou em caso de NÃO SUCESSO {'error': 'unauthorized'}
     """
 
+    if 'Authorization' not in request.headers:
+        return {'error': 'unauthorized'}
+
+    token_from_headers = request.headers['Authorization']
+
     try:
-        token_name = Configuration.TOKEN_NAME
-        token_from_cookie = request.cookies.get(token_name)
-        token_no_bearer = token_from_cookie
-
-        if token_from_cookie is None:
-            return {'error': 'unauthorized'}
-
+        token_no_bearer = token_from_headers[7:]
         decode = jwt.decode(
             token_no_bearer, Configuration.SECRET_KEY, algorithms=['HS256']
         )
         user_id = decode['id']
         return {'user_id': user_id}
-
     except:
         return {'error': 'unauthorized'}
 

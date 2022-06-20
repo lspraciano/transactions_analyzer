@@ -9,10 +9,10 @@ from transaction_analyzer.modules.transaction.controllers.transaction_controller
 )
 
 
-def test_import_transaction_template_with_valid_token(
-    app, client_admin_authenticaded, captured_templates
+def test_import_transaction_template(
+        app, client, captured_templates
 ):
-    response = client_admin_authenticaded.get('transaction/import')
+    response = client.get('transaction/transaction-import-template')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
@@ -20,13 +20,8 @@ def test_import_transaction_template_with_valid_token(
     assert template.name == 'import_transaction.html'
 
 
-def test_import_transaction_template_without_token(client):
-    response = client.get('transaction/import')
-    assert response.status_code == 401
-
-
 def test_import_one_transaction_with_valid_json(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -41,10 +36,12 @@ def test_import_one_transaction_with_valid_json(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     transactions_by_date = get_transaction_by_date(
@@ -59,37 +56,37 @@ def test_import_one_transaction_with_valid_json(
     assert len(transactions_by_date['transactions']) == len(data)
     for idx, transaction in enumerate(transactions_by_date['transactions']):
         assert (
-            transaction['transaction_home_bank']
-            == data[idx]['transaction_home_bank']
+                transaction['transaction_home_bank']
+                == data[idx]['transaction_home_bank']
         )
         assert (
-            transaction['transaction_home_branch']
-            == data[idx]['transaction_home_branch']
+                transaction['transaction_home_branch']
+                == data[idx]['transaction_home_branch']
         )
         assert (
-            transaction['transaction_home_account']
-            == data[idx]['transaction_home_account']
+                transaction['transaction_home_account']
+                == data[idx]['transaction_home_account']
         )
         assert (
-            transaction['transaction_destination_bank']
-            == data[idx]['transaction_destination_bank']
+                transaction['transaction_destination_bank']
+                == data[idx]['transaction_destination_bank']
         )
         assert (
-            transaction['transaction_destination_account']
-            == data[idx]['transaction_destination_account']
+                transaction['transaction_destination_account']
+                == data[idx]['transaction_destination_account']
         )
         assert (
-            transaction['transaction_amount']
-            == data[idx]['transaction_amount']
+                transaction['transaction_amount']
+                == data[idx]['transaction_amount']
         )
         assert (
-            transaction['transaction_date_time']
-            == data[idx]['transaction_date_time']
+                transaction['transaction_date_time']
+                == data[idx]['transaction_date_time']
         )
 
 
 def test_import_one_transaction_already_existing_data(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -104,10 +101,12 @@ def test_import_one_transaction_already_existing_data(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -115,7 +114,7 @@ def test_import_one_transaction_already_existing_data(
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_home_bank(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -130,10 +129,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_bank(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -141,7 +142,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_bank(
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_home_branch(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -156,10 +157,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_branch(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -167,7 +170,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_branch(
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_home_account(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -182,10 +185,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_account
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -193,7 +198,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_account
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_destination_bank(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -208,10 +213,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -219,7 +226,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_destination_branch(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -234,10 +241,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -245,7 +254,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_destination_account(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -260,10 +269,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -271,7 +282,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_amount(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -286,10 +297,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_amount(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -297,7 +310,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_amount(
 
 
 def test_import_one_transaction_with_invalid_json_field_transaction_date_time(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -312,10 +325,12 @@ def test_import_one_transaction_with_invalid_json_field_transaction_date_time(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -323,7 +338,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_date_time(
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_home_bank(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -338,10 +353,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_bank(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -349,7 +366,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_bank(
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_home_branch(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -364,10 +381,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_branch(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -375,7 +394,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_branch(
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_home_account(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -390,10 +409,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_account
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -401,7 +422,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_account
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_destination_bank(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -416,10 +437,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -427,7 +450,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_destination_branch(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -442,10 +465,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -453,7 +478,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_destination_account(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -468,10 +493,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -479,7 +506,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_amount(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -494,10 +521,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_amount(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -505,7 +534,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_amount(
 
 
 def test_import_one_transaction_with_invalid_json_value_transaction_date_time(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -520,10 +549,12 @@ def test_import_one_transaction_with_invalid_json_value_transaction_date_time(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     assert response.status_code == 400
@@ -531,7 +562,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_date_time(
 
 
 def test_import_two_transactions_with_valid_json(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = [
         {
@@ -556,10 +587,12 @@ def test_import_two_transactions_with_valid_json(
         },
     ]
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'transaction/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
 
     transactions_by_date = get_transaction_by_date(
@@ -574,39 +607,39 @@ def test_import_two_transactions_with_valid_json(
     assert len(transactions_by_date['transactions']) == len(data)
     for idx, transaction in enumerate(transactions_by_date['transactions']):
         assert (
-            transaction['transaction_home_bank']
-            == data[idx]['transaction_home_bank']
+                transaction['transaction_home_bank']
+                == data[idx]['transaction_home_bank']
         )
         assert (
-            transaction['transaction_home_branch']
-            == data[idx]['transaction_home_branch']
+                transaction['transaction_home_branch']
+                == data[idx]['transaction_home_branch']
         )
         assert (
-            transaction['transaction_home_account']
-            == data[idx]['transaction_home_account']
+                transaction['transaction_home_account']
+                == data[idx]['transaction_home_account']
         )
         assert (
-            transaction['transaction_destination_bank']
-            == data[idx]['transaction_destination_bank']
+                transaction['transaction_destination_bank']
+                == data[idx]['transaction_destination_bank']
         )
         assert (
-            transaction['transaction_destination_account']
-            == data[idx]['transaction_destination_account']
+                transaction['transaction_destination_account']
+                == data[idx]['transaction_destination_account']
         )
         assert (
-            transaction['transaction_amount']
-            == data[idx]['transaction_amount']
+                transaction['transaction_amount']
+                == data[idx]['transaction_amount']
         )
         assert (
-            transaction['transaction_date_time']
-            == data[idx]['transaction_date_time']
+                transaction['transaction_date_time']
+                == data[idx]['transaction_date_time']
         )
 
 
-def test_suspect_transaction_template_with_valid_token(
-    app, client_admin_authenticaded, captured_templates
+def test_suspect_transaction_template(
+        app, client, captured_templates
 ):
-    response = client_admin_authenticaded.get('transaction/suspect/report')
+    response = client.get('transaction/transaction-suspect-template')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
@@ -614,16 +647,14 @@ def test_suspect_transaction_template_with_valid_token(
     assert template.name == 'suspects_transaction.html'
 
 
-def test_suspect_transaction_template_with_invalid_token(client):
-    response = client.get('transaction/suspect/report')
-    assert response.status_code == 401
-
-
 def test_get_suspects_transactions_report_with_valid_token_and_date(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get(
-        'transaction/suspect?date=01/01/2022'
+    response = client.get(
+        'transaction/suspect?date=01/01/2022',
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
     assert response.status_code == 200
     assert 'transactions_suspect' in response.json
@@ -634,55 +665,73 @@ def test_get_suspects_transactions_report_with_valid_token_and_date(
 
 
 def test_get_suspects_transactions_report_with_invalid_token_and_valid_date(
-    client,
+        client,
 ):
-    response = client.get('transaction/suspect?date=01/01/2022')
+    response = client.get('transaction/suspect?date=01/01/2022',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': 'token_jwt_admin_user'
+                                   })
     assert response.status_code == 401
 
 
 def test_get_suspects_transactions_report_with_valid_token_and_invalid_date_format(
-    client_admin_authenticaded,
+        client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get(
-        'transaction/suspect?date=01-01-2022'
+    response = client.get(
+        'transaction/suspect?date=01-01-2022',
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
     assert response.status_code == 400
 
 
 def test_get_suspects_transactions_report_with_invalid_token_and_date_format(
-    client,
+        client
 ):
-    response = client.get('transaction/suspect?date=01-01-2022')
+    response = client.get('transaction/suspect?date=01-01-2022',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': 'token_jwt_admin_user'
+                                   })
     assert response.status_code == 401
 
 
 def test_get_suspects_transactions_report_with_valid_token_and_invalid_parameter_datey(
-    client_admin_authenticaded,
+        client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get(
-        'transaction/suspect?datey=01-01-2022'
+    response = client.get(
+        'transaction/suspect?datey=01-01-2022',
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 }
     )
     assert response.status_code == 400
 
 
 def test_get_suspects_transactions_report_with_valid_token_and_invalid_date_blank(
-    client_admin_authenticaded,
+        client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get('transaction/suspect?date=')
+    response = client.get('transaction/suspect?date=',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': token_jwt_admin_user
+                                   })
     assert response.status_code == 400
 
 
 def test_get_suspects_transactions_report_with_valid_token_and_no_parameter_date(
-    client_admin_authenticaded,
+        client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get('transaction/suspect')
+    response = client.get('transaction/suspect',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': token_jwt_admin_user
+                                   })
     assert response.status_code == 400
 
 
-def test_report_transaction_template_with_valid_token(
-    app, client_admin_authenticaded, captured_templates
+def test_report_transaction_template(
+        app, client, captured_templates
 ):
-    response = client_admin_authenticaded.get('home/dashboard')
+    response = client.get('home/dashboard')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
@@ -690,15 +739,13 @@ def test_report_transaction_template_with_valid_token(
     assert template.name == 'dashboards.html'
 
 
-def test_report_transaction_template_with_invalid_token(client):
-    response = client.get('home/dashboard')
-    assert response.status_code == 401
-
-
 def test_get_transactions_report_with_valid_token(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
-    response = client_admin_authenticaded.get('transaction/report')
+    response = client.get('transaction/report',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': token_jwt_admin_user
+                                   })
     assert response.status_code == 200
     assert 'transactions_total' in response.json
     assert 'transactions_amount_mean' in response.json
@@ -709,5 +756,8 @@ def test_get_transactions_report_with_valid_token(
 
 
 def test_get_transactions_report_with_invalid_token(client):
-    response = client.get('transaction/report')
+    response = client.get('transaction/report',
+                          headers={'Content-Type': 'application/json',
+                                   'Authorization': 'token_jwt_admin_user'
+                                   })
     assert response.status_code == 401

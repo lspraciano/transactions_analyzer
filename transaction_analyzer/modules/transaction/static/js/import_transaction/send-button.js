@@ -21,8 +21,12 @@ const sendCsv = async () => {
     const processedData = await preProcessingData(data);
     const result = await saveTransactions(processedData.outputValidData);
 
-    if('error' in result) {
+    if ('error' in result) {
         alert(result['error']);
+        if ('unauthorized' === result['error']) {
+            window.parent.location.href = `${window.location.origin}/`;
+        }
+        return;
     } else {
         alert('file saved successfully');
     }

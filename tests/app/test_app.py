@@ -65,10 +65,6 @@ def test_admin_user_is_equal_configuration(app):
     assert app.config['ADMIN_USER_ID'] == TestConfig.ADMIN_USER_ID
 
 
-def test_token_name_is_equal_configuration(app):
-    assert app.config['TOKEN_NAME'] == TestConfig.TOKEN_NAME
-
-
 def test_time_expire_token_is_equal_configuration(app):
     assert app.config['TIME_EXP_TOKEN'] == TestConfig.TIME_EXP_TOKEN
 

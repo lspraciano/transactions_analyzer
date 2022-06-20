@@ -32,20 +32,17 @@ def client(app):
 
 
 @pytest.fixture(scope='function')
-def client_admin_authenticaded(app):
+def token_jwt_admin_user(app):
     """
-    Esta função retorna um cliente HTTP para ser usado durante os teste desta aplicação. Este cliente
-    POSSUI o TOKEN JWT adicionado nos cookies.
+    Esta função retorna TOKEN JWT com payload para o usuário administrador
 
     :param app: app flask
     :return: client HTTP
     """
 
-    cookie_value = token_generator(app.config['ADMIN_USER_ID'])['token']
-    cookie_name = app.config['TOKEN_NAME']
-    client = app.test_client()
-    client.set_cookie('localhost', cookie_name, cookie_value)
-    return client
+    token_not_bearer = str(token_generator(app.config['ADMIN_USER_ID'])['token'])
+    token_bearer = 'Bearer ' + token_not_bearer
+    return token_bearer
 
 
 @pytest.fixture(scope='function')

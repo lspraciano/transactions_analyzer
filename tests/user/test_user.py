@@ -1,4 +1,4 @@
-""""""  # Imports Native
+# Imports Native
 from flask import json
 
 # Created Imports
@@ -11,7 +11,7 @@ def test_redirect_to_login(client):
 
 
 def test_user_authentication_template(client, captured_templates):
-    response = client.get('user/authentication')
+    response = client.get('user/login')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
@@ -100,20 +100,15 @@ def test_user_authentication_json_user_password_value_not_string(client):
     assert 'error' in response.json
 
 
-def test_user_manager_template_with_valid_token(
-    app, client_admin_authenticaded, captured_templates
+def test_user_manager_template(
+        app, client, captured_templates
 ):
-    response = client_admin_authenticaded.get('user/manager')
+    response = client.get('user/manager-template')
     template, context = captured_templates[0]
 
     assert response.status_code == 200
     assert len(captured_templates) == 1
     assert template.name == 'user_manager.html'
-
-
-def test_user_manager_template_without_token(client):
-    response = client.get('user/manager')
-    assert response.status_code == 401
 
 
 def test_create_user_without_jwt_token(client):
@@ -129,13 +124,15 @@ def test_create_user_without_jwt_token(client):
     assert 'error' in response.json
 
 
-def test_create_new_valid_user(client_admin_authenticaded, app):
+def test_create_new_valid_user(client, app, token_jwt_admin_user):
     data = {'user_name': 'TEST', 'user_email': 'TEST@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 201
@@ -144,18 +141,20 @@ def test_create_new_valid_user(client_admin_authenticaded, app):
     assert response.json['user'][0]['user_email'] == data['user_email']
     assert response.json['user'][0]['user_status'] == 1
     assert (
-        response.json['user'][0]['user_last_modification_user_id']
-        == app.config['ADMIN_USER_ID']
+            response.json['user'][0]['user_last_modification_user_id']
+            == app.config['ADMIN_USER_ID']
     )
 
 
-def test_create_duplicate_user(client_admin_authenticaded, app):
+def test_create_duplicate_user(client, app, token_jwt_admin_user):
     data = {'user_name': 'TEST', 'user_email': 'TEST@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400
@@ -163,14 +162,16 @@ def test_create_duplicate_user(client_admin_authenticaded, app):
 
 
 def test_create_user_with_json_field_user_name_wrong(
-    client_admin_authenticaded, app
+        client, app, token_jwt_admin_user
 ):
     data = {'user_naame': 'TEST2', 'user_email': 'TEST2@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -178,14 +179,16 @@ def test_create_user_with_json_field_user_name_wrong(
 
 
 def test_create_user_with_json_field_user_email_wrong(
-    client_admin_authenticaded, app
+        client, app, token_jwt_admin_user
 ):
     data = {'user_name': 'TEST2', 'user_eemail': 'TEST2@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -193,14 +196,16 @@ def test_create_user_with_json_field_user_email_wrong(
 
 
 def test_create_user_with_json_value_user_name_not_string(
-    client_admin_authenticaded, app
+        client, app, token_jwt_admin_user
 ):
     data = {'user_name': 123, 'user_email': 'TEST2@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -208,60 +213,68 @@ def test_create_user_with_json_value_user_name_not_string(
 
 
 def test_create_user_with_json_value_user_email_not_string(
-    client_admin_authenticaded, app
+        client, app, token_jwt_admin_user
 ):
     data = {'user_name': 'TEST2', 'user_email': 123}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
     assert 'error' in response.json
 
 
-def test_create_user_with_blank_user_name(client_admin_authenticaded, app):
+def test_create_user_with_blank_user_name(client, app, token_jwt_admin_user):
     data = {'user_name': '', 'user_email': 'TESTE2@GMAIL.COM'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
     assert 'error' in response.json
 
 
-def test_create_user_with_invalid_user_email(client_admin_authenticaded, app):
+def test_create_user_with_invalid_user_email(client, app, token_jwt_admin_user):
     data = {'user_name': 'TEST2', 'user_email': 'abc'}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400
     assert 'error' in response.json
 
 
-def test_create_user_with_blank_user_email(client_admin_authenticaded, app):
+def test_create_user_with_blank_user_email(client, app, token_jwt_admin_user):
     data = {'user_name': 'TEST2', 'user_email': ''}
 
-    response = client_admin_authenticaded.post(
+    response = client.post(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
     assert 'error' in response.json
 
 
-def test_update_user_with_valid_json(app, client_admin_authenticaded):
+def test_update_user_with_valid_json(app, client, token_jwt_admin_user):
     data = {
         'user_id': 2,
         'user_name': 'FOO',
@@ -269,10 +282,12 @@ def test_update_user_with_valid_json(app, client_admin_authenticaded):
         'user_status': 1,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 200
@@ -282,13 +297,13 @@ def test_update_user_with_valid_json(app, client_admin_authenticaded):
     assert response.json['user'][0]['user_email'] == data['user_email']
     assert response.json['user'][0]['user_status'] == data['user_status']
     assert (
-        response.json['user'][0]['user_last_modification_user_id']
-        == app.config['ADMIN_USER_ID']
+            response.json['user'][0]['user_last_modification_user_id']
+            == app.config['ADMIN_USER_ID']
     )
 
 
 def test_update_user_with_valid_json_and_only_user_name_updated(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -299,10 +314,12 @@ def test_update_user_with_valid_json_and_only_user_name_updated(
 
     user_from_db_before_update = get_user_by_id(data['user_id'])
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     user_from_db_after_update = get_user_by_id(data['user_id'])
@@ -310,27 +327,27 @@ def test_update_user_with_valid_json_and_only_user_name_updated(
     assert response.status_code == 200
     assert 'user' in response.json
     assert (
-        user_from_db_before_update.user_id == user_from_db_after_update.user_id
+            user_from_db_before_update.user_id == user_from_db_after_update.user_id
     )
     assert (
-        user_from_db_before_update.user_name
-        != user_from_db_after_update.user_name
+            user_from_db_before_update.user_name
+            != user_from_db_after_update.user_name
     )
     assert (
-        user_from_db_before_update.user_password
-        == user_from_db_after_update.user_password
+            user_from_db_before_update.user_password
+            == user_from_db_after_update.user_password
     )
     assert (
-        user_from_db_before_update.user_email
-        == user_from_db_after_update.user_email
+            user_from_db_before_update.user_email
+            == user_from_db_after_update.user_email
     )
     assert (
-        user_from_db_before_update.user_token
-        == user_from_db_after_update.user_token
+            user_from_db_before_update.user_token
+            == user_from_db_after_update.user_token
     )
     assert (
-        user_from_db_before_update.user_status
-        == user_from_db_after_update.user_status
+            user_from_db_before_update.user_status
+            == user_from_db_after_update.user_status
     )
 
     assert response.json['user'][0]['user_id'] == data['user_id']
@@ -338,7 +355,7 @@ def test_update_user_with_valid_json_and_only_user_name_updated(
 
 
 def test_update_user_with_valid_json_and_only_user_email_updated(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -349,10 +366,12 @@ def test_update_user_with_valid_json_and_only_user_email_updated(
 
     user_from_db_before_update = get_user_by_id(data['user_id'])
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     user_from_db_after_update = get_user_by_id(data['user_id'])
@@ -360,27 +379,27 @@ def test_update_user_with_valid_json_and_only_user_email_updated(
     assert response.status_code == 200
     assert 'user' in response.json
     assert (
-        user_from_db_before_update.user_id == user_from_db_after_update.user_id
+            user_from_db_before_update.user_id == user_from_db_after_update.user_id
     )
     assert (
-        user_from_db_before_update.user_name
-        == user_from_db_after_update.user_name
+            user_from_db_before_update.user_name
+            == user_from_db_after_update.user_name
     )
     assert (
-        user_from_db_before_update.user_password
-        == user_from_db_after_update.user_password
+            user_from_db_before_update.user_password
+            == user_from_db_after_update.user_password
     )
     assert (
-        user_from_db_before_update.user_email
-        != user_from_db_after_update.user_email
+            user_from_db_before_update.user_email
+            != user_from_db_after_update.user_email
     )
     assert (
-        user_from_db_before_update.user_token
-        == user_from_db_after_update.user_token
+            user_from_db_before_update.user_token
+            == user_from_db_after_update.user_token
     )
     assert (
-        user_from_db_before_update.user_status
-        == user_from_db_after_update.user_status
+            user_from_db_before_update.user_status
+            == user_from_db_after_update.user_status
     )
 
     assert response.json['user'][0]['user_id'] == data['user_id']
@@ -388,7 +407,7 @@ def test_update_user_with_valid_json_and_only_user_email_updated(
 
 
 def test_update_user_with_valid_json_and_only_user_status_updated(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -399,10 +418,12 @@ def test_update_user_with_valid_json_and_only_user_status_updated(
 
     user_from_db_before_update = get_user_by_id(data['user_id'])
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     user_from_db_after_update = get_user_by_id(data['user_id'])
@@ -410,27 +431,27 @@ def test_update_user_with_valid_json_and_only_user_status_updated(
     assert response.status_code == 200
     assert 'user' in response.json
     assert (
-        user_from_db_before_update.user_id == user_from_db_after_update.user_id
+            user_from_db_before_update.user_id == user_from_db_after_update.user_id
     )
     assert (
-        user_from_db_before_update.user_name
-        == user_from_db_after_update.user_name
+            user_from_db_before_update.user_name
+            == user_from_db_after_update.user_name
     )
     assert (
-        user_from_db_before_update.user_password
-        == user_from_db_after_update.user_password
+            user_from_db_before_update.user_password
+            == user_from_db_after_update.user_password
     )
     assert (
-        user_from_db_before_update.user_email
-        == user_from_db_after_update.user_email
+            user_from_db_before_update.user_email
+            == user_from_db_after_update.user_email
     )
     assert (
-        user_from_db_before_update.user_token
-        == user_from_db_after_update.user_token
+            user_from_db_before_update.user_token
+            == user_from_db_after_update.user_token
     )
     assert (
-        user_from_db_before_update.user_status
-        != user_from_db_after_update.user_status
+            user_from_db_before_update.user_status
+            != user_from_db_after_update.user_status
     )
 
     assert response.json['user'][0]['user_id'] == data['user_id']
@@ -438,7 +459,7 @@ def test_update_user_with_valid_json_and_only_user_status_updated(
 
 
 def test_update_user_with_valid_json_and_no_changes_to_save(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -447,17 +468,19 @@ def test_update_user_with_valid_json_and_no_changes_to_save(
         'user_status': None,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400
     assert 'error' in response.json
 
 
-def test_update_user_with_invalid_same_value_in_database(app, client_admin_authenticaded):
+def test_update_user_with_invalid_same_value_in_database(app, client, token_jwt_admin_user):
     data = {
         'user_id': 2,
         'user_name': 'BOO',
@@ -465,17 +488,20 @@ def test_update_user_with_invalid_same_value_in_database(app, client_admin_authe
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
+
     assert response.status_code == 400
     assert 'error' in response.json
 
 
 def test_update_user_with_invalid_json_field_user_id(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_idd': 2,
@@ -484,10 +510,12 @@ def test_update_user_with_invalid_json_field_user_id(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -495,7 +523,7 @@ def test_update_user_with_invalid_json_field_user_id(
 
 
 def test_update_user_with_invalid_json_field_user_name(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -504,10 +532,12 @@ def test_update_user_with_invalid_json_field_user_name(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -515,7 +545,7 @@ def test_update_user_with_invalid_json_field_user_name(
 
 
 def test_update_user_with_invalid_json_field_user_email(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -524,10 +554,12 @@ def test_update_user_with_invalid_json_field_user_email(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -535,7 +567,7 @@ def test_update_user_with_invalid_json_field_user_email(
 
 
 def test_update_user_with_invalid_json_field_user_status(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -544,10 +576,12 @@ def test_update_user_with_invalid_json_field_user_status(
         'user_statuss': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -555,7 +589,7 @@ def test_update_user_with_invalid_json_field_user_status(
 
 
 def test_update_user_with_invalid_json_value_user_id_not_int(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': '2',
@@ -564,10 +598,12 @@ def test_update_user_with_invalid_json_value_user_id_not_int(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -575,7 +611,7 @@ def test_update_user_with_invalid_json_value_user_id_not_int(
 
 
 def test_update_user_with_invalid_json_value_user_name_not_str(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -584,10 +620,12 @@ def test_update_user_with_invalid_json_value_user_name_not_str(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -595,7 +633,7 @@ def test_update_user_with_invalid_json_value_user_name_not_str(
 
 
 def test_update_user_with_invalid_json_value_user_email_not_str(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -604,10 +642,12 @@ def test_update_user_with_invalid_json_value_user_email_not_str(
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -615,7 +655,7 @@ def test_update_user_with_invalid_json_value_user_email_not_str(
 
 
 def test_update_user_with_invalid_json_value_user_status_not_int(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -624,10 +664,12 @@ def test_update_user_with_invalid_json_value_user_status_not_int(
         'user_status': '0',
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
@@ -635,7 +677,7 @@ def test_update_user_with_invalid_json_value_user_status_not_int(
 
 
 def test_update_user_with_invalid_json_value_user_status_not_between_0_1(
-    app, client_admin_authenticaded
+        app, client, token_jwt_admin_user
 ):
     data = {
         'user_id': 2,
@@ -644,17 +686,19 @@ def test_update_user_with_invalid_json_value_user_status_not_between_0_1(
         'user_status': 2,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 415
     assert 'error' in response.json
 
 
-def test_update_user_with_existent_user_email(app, client_admin_authenticaded):
+def test_update_user_with_existent_user_email(app, client, token_jwt_admin_user):
     data = {
         'user_id': 2,
         'user_name': None,
@@ -662,17 +706,19 @@ def test_update_user_with_existent_user_email(app, client_admin_authenticaded):
         'user_status': 1,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400
     assert 'error' in response.json
 
 
-def test_update_user_with_existent_user_name(app, client_admin_authenticaded):
+def test_update_user_with_existent_user_name(app, client, token_jwt_admin_user):
     data = {
         'user_id': 2,
         'user_name': app.config['ADMIN_USER_NAME'],
@@ -680,17 +726,19 @@ def test_update_user_with_existent_user_name(app, client_admin_authenticaded):
         'user_status': 1,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400
     assert 'error' in response.json
 
 
-def test_update_user_deactivating_himself(app, client_admin_authenticaded):
+def test_update_user_deactivating_himself(app, client, token_jwt_admin_user):
     data = {
         'user_id': app.config['ADMIN_USER_ID'],
         'user_name': app.config['ADMIN_USER_NAME'],
@@ -698,10 +746,12 @@ def test_update_user_deactivating_himself(app, client_admin_authenticaded):
         'user_status': 0,
     }
 
-    response = client_admin_authenticaded.patch(
+    response = client.patch(
         'user/',
         data=json.dumps(data),
-        headers={'Content-Type': 'application/json'},
+        headers={'Content-Type': 'application/json',
+                 'Authorization': token_jwt_admin_user
+                 },
     )
 
     assert response.status_code == 400

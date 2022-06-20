@@ -11,10 +11,13 @@ import {startPreloading, stopPreloading} from "../../../../../resources/js/prelo
 
         const data = await getLogsTransactionData();
 
-        if (data.hasOwnProperty('error')) {
+        if ('error' in data) {
             alert(data['error']);
-            location.reload();
-         }
+            if ('unauthorized' === data['error']) {
+                window.parent.location.href = `${window.location.origin}/`;
+            }
+            return;
+        }
 
         for (let i in data['logs']) {
 
