@@ -13,6 +13,7 @@ info:
 
 servers:
   - url: http://127.0.0.1:5001
+  - url: https://transactions-analyzer.herokuapp.com/
 
 
 paths:
@@ -31,14 +32,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthenticateUserPostRequest'
+              $ref: '#/components/schemas/UserAuthenticationPostRequest'
       responses:
         200:
           description: Usuário atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthenticateUserPostResponse'
+                $ref: '#/components/schemas/UserAuthenticationPostResponse'
         401:
           description: Requisitante não autenticado
           content:
@@ -107,7 +108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BasicUserList'
+                $ref: '#/components/schemas/UserBasicListResponse'
         401:
           description: Requisitante não autenticado
           content:
@@ -130,7 +131,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
+              $ref: '#/components/schemas/UserUpdateRequest'
       responses:
         201:
           description: Usuário atualizado com sucesso
@@ -217,12 +218,12 @@ components:
         user_last_modification_user_id:
           type: integer
 
-    BasicUserList:
+    UserBasicListResponse:
       type: array
       items:
         $ref: '#/components/schemas/UserBasicResponse'
 
-    UpdateUserRequest:
+    UserUpdateRequest:
       type: object
       properties:
         user_id:
@@ -266,7 +267,7 @@ components:
         - user_name
         - user_email
 
-    AuthenticateUserPostRequest:
+    UserAuthenticationPostRequest:
       type: object
       properties:
         user_name:
@@ -281,7 +282,7 @@ components:
         - user_name
         - user_password
 
-    AuthenticateUserPostResponse:
+    UserAuthenticationPostResponse:
       type: object
       properties:
         token:

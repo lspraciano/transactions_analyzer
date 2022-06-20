@@ -23,6 +23,8 @@ class Configuration:
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    SWAGGER_URL = '/swagger'
+    API_URL = '/docs/transactions_analyzer.json'
 
 
 class DevelopmentConfig(Configuration):
