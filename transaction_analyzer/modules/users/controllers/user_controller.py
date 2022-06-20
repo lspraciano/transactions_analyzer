@@ -240,9 +240,9 @@ def update_user(user_dict: dict) -> make_response:
     if not user:
         return make_response({'error': 'non-existing user'}, 400)
 
-    if user.user_name == user_dict['user_name'] and \
-            user.user_email == user_dict['user_email'] and \
-            user.user_status == user_dict['user_status']:
+    if (user.user_name == user_dict['user_name'] or user_dict['user_name'] is None) and \
+            (user.user_email == user_dict['user_email'] or user_dict['user_email'] is None) and \
+            (user.user_status == user_dict['user_status'] or user_dict['user_status'] is None):
         return make_response({'error': 'there are no changes to save'}, 400)
 
     user_from_token = user_id_from_token()
@@ -331,7 +331,7 @@ def send_reset_password_token_to_user(user_request: dict) -> make_response:
         if 'success' not in send_email_result:
             return make_response(send_email_result, 400)
 
-        return make_response({'user_id': user.user_id}, 200)
+        return make_response({'user_id': user.user_id}, 201)
 
     except:
         get_error_msg()

@@ -16,11 +16,48 @@ servers:
 
 
 paths:
-  /user/:
+
+  /user/authentication:
     post:
       tags:
         - User
-      summary: Cria um novo usuário no banco de dados
+      summary: Autentica um Usuário
+      description: Esta rota autentica um usuário através de seu user_name e
+        user_password. Uma vez autenticado o usuário receberá um TOKEN JWT
+        BEARER que deverá ser enviados no cabeçalho das requisições
+        (Authorization)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateUserPostRequest'
+      responses:
+        200:
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateUserPostResponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        415:
+          description: Erro no JSON da requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+  /user/:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Cria um Novo Usuário
       description: Esta rota insere no banco SQL um usuário. Antes de inserir é verificado a existência do email ou
         username no banco para evitar duplicidade nos cadastros. Será gerada uma senha com 8 carácteres para este
         usuário e enviada automaticamente para o email informado.
@@ -29,14 +66,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'
+              $ref: '#/components/schemas/UserPostRequest'
       responses:
         200:
           description: Usuário atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BasicUser'
+                $ref: '#/components/schemas/UserBasicResponse'
         400:
           description: Erro ao tentar criar usuário
           content:
@@ -57,14 +94,20 @@ paths:
                 $ref: '#/components/schemas/ErrorResoponse'
 
     get:
+      security:
+        - bearerAuth: []
       tags:
         - User
-      summary: Retorna uma lista com todos os usuário do banco de dados
-      description: Retorna todos os usuário do banco de dados com exeção do usuário
+      summary: Retorna uma Lista de Usuários
+      description: Retorna todos os usuários do banco de dados com exeção do usuário
         administrador.
       responses:
         200:
           description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicUserList'
         401:
           description: Requisitante não autenticado
           content:
@@ -73,6 +116,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResoponse'
 
     patch:
+      security:
+        - bearerAuth: []
       tags:
         - User
       summary: Atualiza Dados do Usuário
@@ -85,14 +130,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUser'
+              $ref: '#/components/schemas/UpdateUserRequest'
       responses:
         201:
           description: Usuário atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BasicUser'
+                $ref: '#/components/schemas/UserBasicResponse'
         400:
           description: Erro ao tentar atualizar o usuário
           content:
@@ -112,10 +157,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResoponse'
 
+  /user/reset-password:
+    post:
+      tags:
+        - User
+      summary: Cria um Token de Troca de Senha.
+      description: Esta rota gera um token com 6 dígitos de forma aleatória e
+        vincúla este token ao usuário informado. Este token deverá ser usado
+        para resetar a senha do usuário. Ele é enviado de forma automática
+        para o email de cadastro do usuário alvo. Esta rota possui um limite
+        de 3 tentativas por 5 min. Ela retorna o user_id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordPostRequest'
+      responses:
+        201:
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetPasswordPostResponse'
+        400:
+          description: Erro ao tentar criar token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        415:
+          description: Erro no JSON da requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
 
 components:
+
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
-    BasicUser:
+
+    UserBasicResponse:
       type: object
       properties:
         user_id:
@@ -132,9 +220,9 @@ components:
     BasicUserList:
       type: array
       items:
-        $ref: '#/components/schemas/BasicUser'
+        $ref: '#/components/schemas/UserBasicResponse'
 
-    UpdateUser:
+    UpdateUserRequest:
       type: object
       properties:
         user_id:
@@ -162,7 +250,7 @@ components:
         - user_email
         - user_status
 
-    CreateUser:
+    UserPostRequest:
       type: object
       properties:
         user_name:
@@ -178,8 +266,46 @@ components:
         - user_name
         - user_email
 
+    AuthenticateUserPostRequest:
+      type: object
+      properties:
+        user_name:
+          type: string
+          minLength: 1
+          x-constraints: "Capitalized(required = true)"
+        user_password:
+          type: string
+          minLength: 1
+
+      required:
+        - user_name
+        - user_password
+
+    AuthenticateUserPostResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    ResetPasswordPostRequest:
+      type: object
+      properties:
+        user_name:
+          type: string
+          minLength: 1
+          nullable: false
+
+    ResetPasswordPostResponse:
+      type: object
+      properties:
+        user_id:
+          type: integer
+
+
     ErrorResoponse:
       type: object
       properties:
         error:
           type: string
+
+
