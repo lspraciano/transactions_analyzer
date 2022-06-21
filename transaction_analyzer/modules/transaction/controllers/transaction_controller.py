@@ -127,10 +127,10 @@ def get_transactions_list_by_date(
 def save_transactions_list(transactions_list: list) -> make_response:
     """
     Esta função salva uma lista de transações no banco de dados.  A formatação da lista de dicionário deve seguir
-    esta ordem de valores: { "transaction_home_bank" : "type": "string", "transaction_home_branch" : "type": "integer",
+    esta ordem de valores: [{ "transaction_home_bank" : "type": "string", "transaction_home_branch" : "type": "integer",
     "transaction_home_account" : "type": "string", "transaction_destination_bank" : "type": "string",
     "transaction_destination_branch" : "type": "integer", "transaction_destination_account" : "type": "string",
-    "transaction_amount" : "type": "number", "transaction_date_time" : "type": "string" }
+    "transaction_amount" : "type": "number", "transaction_date_time" : "type": "string" },]
 
     :param transactions_list: lista de transações
     :return: no caso de sucesso: { 'success': { 'transactions': número de linhas } } ou em caso de NÃO sucesso
@@ -141,7 +141,7 @@ def save_transactions_list(transactions_list: list) -> make_response:
         check_transactions = validate_transaction_list(transactions_list)
 
         if 'error' in check_transactions:
-            return make_response(check_transactions, 400)
+            return make_response(check_transactions, 415)
 
         transactions = []
         transaction_date = ''

@@ -13,7 +13,7 @@ info:
 
 servers:
   - url: http://127.0.0.1:5001
-  - url: https://transactions-analyzer.herokuapp.com/
+  - url: http://transactions-analyzer.herokuapp.com/
 
 
 paths:
@@ -52,6 +52,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResoponse'
+
   /user/:
     post:
       security:
@@ -194,10 +195,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResoponse'
 
+  /transaction/:
+    post:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Transaction
+      summary: Inseri uma Transação.
+      description: Esta rota recebe uma lista de transações e inseri elas no banco. Ao inserir a(s)
+        transação(ões) para um determinado dia, todas elas são consideradas do lote do referido 
+        dia. Desta forma só é permitido inserir transações de um lote apenas uma única vez.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPostRequest'
+      responses:
+        201:
+          description: Transações importadas com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionPostResponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        400:
+          description: Erro ao tentar importar transações
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        415:
+          description: Erro no JSON da requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
 components:
 
   securitySchemes:
-    bearerAuth:            # arbitrary name for the security scheme
+    bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -220,6 +263,8 @@ components:
 
     UserBasicListResponse:
       type: array
+      nullable: false
+      minItems: 1
       items:
         $ref: '#/components/schemas/UserBasicResponse'
 
@@ -301,6 +346,53 @@ components:
       properties:
         user_id:
           type: integer
+
+    TransactionPostRequest:
+      type: array
+      nullable: false
+      minItems: 1
+      items:
+        type: object
+        properties:
+          transaction_home_bank:
+            type: string
+            minLength: 1
+            nullable: false
+          transaction_home_branch:
+            type: integer
+          transaction_home_account:
+            type: string
+            minLength: 1
+            nullable: false
+          transaction_destination_bank:
+            type: string
+            minLength: 1
+            nullable: false
+          transaction_destination_branch:
+            type: integer
+          transaction_destination_account:
+            type: string
+            minLength: 1
+            nullable: false
+          transaction_amount:
+            type: number
+            minimum: 0.01
+          transaction_date_time:
+            type: string
+            format: date-time
+            example: "2021-01-30T08:30:00"
+            nullable: false
+
+    TransactionPostResponse:
+      type: object
+      properties:
+        success:
+          type: object
+          properties:
+            transactions:
+              type: integer
+              description: Número de transações importadas
+
 
 
     ErrorResoponse:

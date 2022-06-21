@@ -4,6 +4,7 @@ json_transaction = {
     'type': 'array',
     'items': {
         'type': 'object',
+        "minItems": 1,
         'required': [
             'transaction_home_bank',
             'transaction_home_branch',
