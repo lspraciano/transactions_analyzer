@@ -56,7 +56,7 @@ paths:
   /user/:
     post:
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - User
       summary: Cria um Novo Usuário
@@ -97,7 +97,7 @@ paths:
 
     get:
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - User
       summary: Retorna uma Lista de Usuários
@@ -119,7 +119,7 @@ paths:
 
     patch:
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - User
       summary: Atualiza Dados do Usuário
@@ -203,7 +203,7 @@ paths:
         - Transaction
       summary: Inseri uma Transação.
       description: Esta rota recebe uma lista de transações e inseri elas no banco. Ao inserir a(s)
-        transação(ões) para um determinado dia, todas elas são consideradas do lote do referido 
+        transação(ões) para um determinado dia, todas elas são consideradas do lote do referido
         dia. Desta forma só é permitido inserir transações de um lote apenas uma única vez.
       requestBody:
         required: true
@@ -236,6 +236,129 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResoponse'
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Transaction
+      summary: Consultar Transações.
+      description: Esta rota permite que seja solicitado todas as transações para uma determinada data; ou seja,
+        retona as transações de um determinado lote.
+      parameters:
+        - in: query
+          name: date
+          required: true
+          description: Data que se deseja as transações
+          schema:
+            type: string
+            example: "01/02/2022"
+      responses:
+        200:
+          description: Consulta realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionGetResponse'
+        400:
+          description: Erro ao consultar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+  /transaction/log/get-log:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Transaction
+      summary: Consultar os Lotes Importados.
+      description: Esta rota permite a cosultar de todos lotes que foram importados. Nenhum parâmetro é necessário.
+      responses:
+        200:
+          description: Consulta realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionLogsGetResponse'
+        400:
+          description: Erro ao consultar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+  /transaction/suspect:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Transaction
+      summary: Retorna as Transações, Agências e Contas Suspeitas.
+      description: Esta rota permite a cosultar através de uma data quais transações, agências e contas se caraterizam
+        como suspeitas.
+      parameters:
+        - in: query
+          name: date
+          required: true
+          description: Data que se deseja consultar
+          schema:
+            type: string
+            example: "01/02/2022"
+      responses:
+        200:
+          description: Consulta realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSuspectGetResponse'
+        400:
+          description: Erro ao consultar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
+  /transaction/report:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Transaction
+      summary: Relatório de Transações.
+      description: Esta rota retorna um relatório geral das transações do mês corrente.
+      responses:
+        200:
+          description: Consulta realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionReportGetResponse'
+        401:
+          description: Requisitante não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResoponse'
+
 
 components:
 
@@ -393,7 +516,142 @@ components:
               type: integer
               description: Número de transações importadas
 
+    TransactionGetResponse:
+      type: object
+      properties:
+        success:
+          type: object
+          properties:
+            transactions:
+              type: array
+              items:
+                type: object
+                properties:
+                  transaction_id:
+                    type: integer
+                  transaction_home_bank:
+                    type: string
+                  transaction_home_branch:
+                    type: integer
+                  transaction_home_account:
+                    type: string
+                  transaction_destination_bank:
+                    type: string
+                  transaction_destination_branch:
+                    type: integer
+                  transaction_destination_account:
+                    type: string
+                  transaction_amount:
+                    type: number
+                  transaction_date_time:
+                    type: string
+                    format: date-time
+                    example: "2021-01-30T08:30:00"
 
+    TransactionLogsGetResponse:
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              transactions_log_id:
+                type: integer
+              transactions_log_transactions_datetime:
+                type: string
+                format: date-time
+                example: "2021-01-30T08:30:00"
+              transactions_log_datetime:
+                type: string
+                format: date-time
+                example: "2021-01-30T08:30:00"
+              transactions_log_user_id:
+                type: integer
+              transactions_log_user_rl:
+                type: object
+                $ref: '#/components/schemas/UserBasicResponse'
+
+    TransactionSuspectGetResponse:
+      type: object
+      properties:
+        'transactions_suspect':
+            $ref: '#/components/schemas/TransactionPostRequest'
+        'transactions_suspect_home_account':
+          type: array
+          items:
+            type: object
+            properties:
+              transaction_home_bank:
+                type: string
+              transaction_home_branch:
+                type: integer
+              transaction_home_account:
+                type: string
+              transaction_amount:
+                type: number
+        'transactions_suspect_destination_account':
+          type: array
+          items:
+            type: object
+            properties:
+              transaction_destination_bank:
+                type: string
+              transaction_destination_branch:
+                type: integer
+              transaction_destination_account:
+                type: string
+              transaction_amount:
+                type: number
+        'transactions_suspect_home_branch':
+          type: array
+          items:
+            type: object
+            properties:
+              transaction_home_bank:
+                type: string
+              transaction_home_branch:
+                type: integer
+              transaction_amount:
+                type: number
+
+        'transactions_suspect_destination_branch':
+          type: array
+          items:
+            type: object
+            properties:
+              transaction_destination_bank:
+                type: string
+              transaction_destination_branch:
+                type: integer
+              transaction_amount:
+                type: number
+
+    TransactionReportGetResponse:
+        type: object
+        properties:
+          transactions_total:
+            type: integer
+          transactions_amount_mean:
+            type: number
+          transactions_suspect_mean:
+            type: number
+          transactions_suspect_percentage:
+            type: number
+          transactions_total_per_day:
+            type: object
+            properties:
+              total:
+                type: integer
+              date:
+                type: integer
+          transactions_total_per_bank:
+            type: object
+            properties:
+              total:
+                type: integer
+              bank:
+                type: string
 
     ErrorResoponse:
       type: object
