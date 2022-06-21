@@ -1,4 +1,6 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,7 +11,7 @@ class Configuration:
     PORT = 5001
     TEMPLATES_AUTO_RELOAD = True
     SECRET_KEY = os.getenv('SECRET_KEY')
-    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    ROOT_DIR = os.path.dirname(sys.modules['__main__'].__file__)
     ADMIN_USER_ID = 1  # System user admin ID
     ADMIN_USER_NAME = 'ADMIN'  # System user admin name
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')  # System user admin password
@@ -23,8 +25,21 @@ class Configuration:
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    SWAGGER_URL = '/swagger'
-    API_URL = '/docs/transactions_analyzer.json'
+    SWAGGER = {
+        'title': 'Transactions Analyzer - API',
+        "version": "1.0.0",
+        "contact": {
+            "name": "Suporte a Desenvolvedores",
+            "email": "luskcct@gmail.com"
+        },
+        "license": {
+            "name": "Licença GPLv3",
+            "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+        },
+        'uiversion': 3,
+        'openapi': '3.0.3',
+        'persistAuthorization': True,
+    }
 
 
 class DevelopmentConfig(Configuration):

@@ -306,10 +306,10 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
 
 #### Link Servidor de Produção
 
-[1. Swagger - Transactions Analyzer API](http://transactions-analyzer.herokuapp.com/swagger)
+[1. Swagger - Transactions Analyzer API](http://transactions-analyzer.herokuapp.com/apidocs/)
 
 #### Link Servidor Local
     Caso esteja rodando a aplicação localmente em seu computador, você pode
     opatar por essa alternativa.
 
-[2. Swagger - Transactions Analyzer API](http://127.0.0.1:5001/swagger/)
+[2. Swagger - Transactions Analyzer API](http://127.0.0.1:5001/apidocs/)
