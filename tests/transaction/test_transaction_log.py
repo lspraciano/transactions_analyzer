@@ -83,7 +83,7 @@ def test_save_transaction_log_with_invalid_json_field_transaction_home_bank(
 
     transaction_logs = get_all_logs()
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     for log in transaction_logs['logs']:
         assert (
                 data[0]['transaction_date_time']

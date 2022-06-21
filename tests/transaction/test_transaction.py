@@ -109,7 +109,7 @@ def test_import_one_transaction_already_existing_data(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -137,7 +137,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_bank(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -165,7 +165,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_branch(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -193,7 +193,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_home_account
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -221,7 +221,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -249,7 +249,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -277,7 +277,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -305,7 +305,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_amount(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -333,7 +333,7 @@ def test_import_one_transaction_with_invalid_json_field_transaction_date_time(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -361,7 +361,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_bank(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -389,7 +389,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_branch(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -417,7 +417,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_home_account
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -445,7 +445,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -473,7 +473,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -501,7 +501,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_destination_
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -529,7 +529,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_amount(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
@@ -557,7 +557,7 @@ def test_import_one_transaction_with_invalid_json_value_transaction_date_time(
                  }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 415
     assert 'error' in response.json
 
 
