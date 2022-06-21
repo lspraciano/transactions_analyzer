@@ -25,21 +25,7 @@ class Configuration:
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    SWAGGER = {
-        'title': 'Transactions Analyzer - API',
-        "version": "1.0.0",
-        "contact": {
-            "name": "Suporte a Desenvolvedores",
-            "email": "luskcct@gmail.com"
-        },
-        "license": {
-            "name": "Licença GPLv3",
-            "url": "https://www.gnu.org/licenses/gpl-3.0.html"
-        },
-        'uiversion': 3,
-        'openapi': '3.0.3',
-        'persistAuthorization': True,
-    }
+    SWAGGER = {'openapi': '3.0.3'}
 
 
 class DevelopmentConfig(Configuration):

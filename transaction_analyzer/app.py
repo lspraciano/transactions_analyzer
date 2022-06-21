@@ -42,4 +42,4 @@ def _register_blueprint(app: Flask) -> None:
 
 
 def _register_swagger_ui(app: Flask) -> None:
-    swagger = Swagger(app, template_file='../docs/mkdocs.yml')
+    Swagger(app, template_file='../docs/mkdocs.yml')

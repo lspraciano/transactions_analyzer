@@ -18,7 +18,7 @@ COPY ../transaction_analyzer /var/www/app/transaction_analyzer
 COPY ../run.py /var/www/app
 COPY ../.env /var/www/app
 COPY ./docker/entrypoint.sh /var/www/app
-COPY ../docs /var/www/app/docs
+COPY ../docs/mkdocs.yml /var/www/app/docs/
 
 # path poetry and install
 ENV PATH="${PATH}:/root/.poetry/bin"
