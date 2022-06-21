@@ -309,11 +309,11 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
     Caso não deseje não rodar a aplicação localmente em seu computador, vocês
     pode usar o link abaixo para realizar as requisições das rotas da API.
 
-[1. Swagger - Transactions Analyzer API](http://transactions-analyzer.herokuapp.com/apidocs/)
+[1. Swagger Prod - Transactions Analyzer API](http://transactions-analyzer.herokuapp.com/apidocs/)
 
 #### Link Servidor Local
 
     Caso esteja rodando a aplicação localmente em seu computador, você pode
     opatar por essa alternativa.
 
-[2. Swagger - Transactions Analyzer API](http://127.0.0.1:5001/apidocs/)
+[2. Swagger Local - Transactions Analyzer API](http://127.0.0.1:5001/apidocs/)
