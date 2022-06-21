@@ -37,8 +37,8 @@ nos usuários e uma HomePage com Dashboards.
 Podemos usar esta aplicação de 3 formas:
 
 1. Acesso via página Web
-2. Clonando o Repositório
-3. Consumo da nossa API
+2. Consumo da nossa API
+3. Clonando o Repositório
 
 ### 1. Acesso via página Web:
 
@@ -52,7 +52,7 @@ Podemos usar esta aplicação de 3 formas:
 6. Cadastrar, Consultar, Alterar e Deletar usuário do sistema
 7. Recuperar ou Trocar Senha de Acesso
 
-Nossa app esta disponibilizado para uso atráves do link:
+Nosso app esta disponibilizado para uso atráves do link:
     
 [transactions-analyzer.herokuapp.com](http://transactions-analyzer.herokuapp.com/)
 
@@ -68,7 +68,10 @@ Para realizar o acesso criamos as credenciais de acesso para você testar:
     Senha: 123999
 
     obs: Nesta tela de login na região inferior a imagem econtramos um link para
-    recuperação ou troca de senha. Esta será abordada no tópico 7.
+    recuperação ou troca de senha. Esta funcionalidade será abordada
+    no tópico 7 desta seção
+
+
 
 ##### 2. Home Page (Navegação + Relatório Geral de Transalções)
 
@@ -238,15 +241,15 @@ botão de voltar
     realizar a troca.
 
     obs 2: Todas as alterações realizadas são registradas em uma
-    tabela de auditoria através de uma Trigger registada no banco SQL. Deste
+    tabela de auditoria através de uma Trigger registada no banco SQL. Desta
     forma podemos auditar quaisquer mudanças realizas e identifcar o usuário
     responsável
 
 Tabela
 
-    Esta tabela contem as informações básicas do usuário. Caso deseje alterar um deste
-    registro, você deverá realizar um duplo clique na linha desejad. Desta forma
-    a tabela irá ser ocultado e o formulário de usuário será exibido com as
+    Esta tabela contém as informações básicas do usuário. Caso deseje alterar um deste
+    registro, você deverá realizar um duplo clique na linha deseja. Desta forma
+    a tabela irá ser ocultada e o formulário de usuário será exibido com as
     informações referentes a linha escolhida.
 
 ##### 7. Recuperar ou Trocar Senha de Acesso
@@ -295,14 +298,10 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
 ![]( images/password-4.png)
     Estando neste tela é só clicar em finalizar.
 
-### 2. Clonando Repositório:
+### 2. Consumir nossa API:
     
-    Seção do docs não disponível neste momento 
-
-### 3. Consumir nossa API:
-    
-    Para consumir nossa API montamos um Swagger UI. Você pode acessar através
-    das opções abaixo
+    A documentação de consumo da nossa API esta disponível através do
+    Swagger UI. Você pode acessar através das opções abaixo
 
 #### Link Servidor de Produção
 
@@ -317,3 +316,8 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
     opatar por essa alternativa.
 
 [2. Swagger Local - Transactions Analyzer API](http://127.0.0.1:5001/apidocs/)
+
+### 3. Clonando Repositório:
+    
+    Seção do docs não disponível neste momento 
+
