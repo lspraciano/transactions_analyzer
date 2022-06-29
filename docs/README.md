@@ -374,8 +374,11 @@ listado abaixo de acordo com sua necessidade.
     #export FLASK_ENV = test
     #export FLASK_ENV = production
 
-Por exemplo, se desejar rodar os teste da aplicação a configuração será
-a seguinte:
+Por exemplo, se desejar rodar os testes da aplicação através do comando
+
+    make test
+
+a configuração será a seguinte:
     
     #export FLASK_ENV = development
     export FLASK_ENV = test
