@@ -361,28 +361,26 @@ Agora estamos prontos para rodar nosso projeto usando o comando:
 
 Você poderá roda-lo no modo de desenvolvimento, produção ou teste. O que
 irá determinar qual modo ele será iniciado é a variávle de ambiente
-FLASK_ENV. Configuramos o arquivo MAKEFILE com um comando:
+FLASK_ENV. Ela pode ser configurada em 3 valores:
 
-    export FLASK_ENV = development
+    1. development
+    2. prodcution
+    3. test
 
-Desta forma ao rodar o comando "make run" a aplicação irá inicar em 
-modo de desenvolvimento. Caso deseje alterar as para outros modos, 
-você pode entrar no arquivo MAKEFILE e descomentar um dos comandos
-listado abaixo de acordo com sua necessidade.
+1. development
 
-    export FLASK_ENV = development
-    #export FLASK_ENV = test
-    #export FLASK_ENV = production
+    - Setando para development a aplicação irá rpdar e modo de desnvolvimento
 
-Por exemplo, se desejar rodar os testes da aplicação através do comando
+2. production
+
+    - Setando para production a aplicação irá rpdar e modo de produção
+
+3. test
+
+   - Setando para test a aplicação irá rpdar e modo de test
+
+Através do comando
 
     make test
 
-a configuração será a seguinte:
-    
-    #export FLASK_ENV = development
-    export FLASK_ENV = test
-    #export FLASK_ENV = production
-
-
-
+Você pode realizar os test automatizados da aplicação.

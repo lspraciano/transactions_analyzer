@@ -1,7 +1,3 @@
-export FLASK_ENV = development
-#export FLASK_ENV = test
-#export FLASK_ENV = production
-
 
 install:
 		@poetry install
