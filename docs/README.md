@@ -318,6 +318,68 @@ link você será redirecionado para a tela de Recuperação de Senha abaixo:
 [2. Swagger Local - Transactions Analyzer API](http://127.0.0.1:5001/apidocs/)
 
 ### 3. Clonando Repositório:
+
+Os requisisto para rodar o projeto localmente são:
+
+    1. PostgreSQL
+    2. Git
+    3. Poetry
+    4. GNU Make
+    5. Email GMAIL habilitado para  envio por APPS
     
-    Seção do docs não disponível neste momento 
+
+Para clonar o respósitório você deve criar uma pasta com nome que desejar
+e usar o comando abaixo para baixar nosso projeto para dentro dela
+
+    git clone https://github.com/lspraciano/transactions_analyzer.git
+
+Feito isso devemos criar um arquivo com nome .env que irá conter as varáveis
+de ambiente necessária para rodar o projeto. Este arquivo .env deverá ser
+inserido na raiz do projeto, no mesmo nível do arquivo run.py, por exemplo.
+O conteúdo dele foi listado abaixo:
+
+    SECRET_KEY='uma chave secreta'
+
+    DEV_SQLALCHEMY_DATABASE_URI='URI para o banco de desenvolvimento'
+    TEST_SQLALCHEMY_DATABASE_URI='URI para o banco de test'
+    PROD_SQLALCHEMY_DATABASE_URI='URI para o banco de produção'
+
+    ADMIN_PASSWORD='senha do usuário administrador do sistema'
+    ADMIN_EMAIL='email do usuário administrador do sistema'
+    
+    MAIL_USERNAME='email pelo qual o sistema enviará os email'
+    MAIL_PASSWORD='token/senha do email para o envios do sistema'
+
+Após realizar esta configuração, vamos instalar as dependências através do
+comando abaixo:
+    
+    make install
+
+Agora estamos prontos para rodar nosso projeto usando o comando:
+
+    make run
+
+Você poderá roda-lo no modo de desenvolvimento, produção ou teste. O que
+irá determinar qual modo ele será iniciado é a variávle de ambiente
+FLASK_ENV. Configuramos o arquivo MAKEFILE com um comando:
+
+    export FLASK_ENV = development
+
+Desta forma ao rodar o comando "make run" a aplicação irá inicar em 
+modo de desenvolvimento. Caso deseje alterar as para outros modos, 
+você pode entrar no arquivo MAKEFILE e descomentar um dos comandos
+listado abaixo de acordo com sua necessidade.
+
+    export FLASK_ENV = development
+    #export FLASK_ENV = test
+    #export FLASK_ENV = production
+
+Por exemplo, se desejar rodar os teste da aplicação a configuração será
+a seguinte:
+    
+    #export FLASK_ENV = development
+    export FLASK_ENV = test
+    #export FLASK_ENV = production
+
+
 
