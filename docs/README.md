@@ -369,18 +369,18 @@ FLASK_ENV. Ela pode ser configurada em 3 valores:
 
 1. development
 
-    - Setando para development a aplicação irá rpdar e modo de desnvolvimento
+    - Setando para development a aplicação irá rOdar eM modo de desnvolvimento
 
 2. production
 
-    - Setando para production a aplicação irá rpdar e modo de produção
+    - Setando para production a aplicação irá rodar em modo de produção
 
 3. test
 
-   - Setando para test a aplicação irá rpdar e modo de test
+   - Setando para test a aplicação irá rodar em modo de test
 
 Através do comando
 
     make test
 
-Você pode realizar os test automatizados da aplicação.
+Você pode realizar os testes automatizados da aplicação.
